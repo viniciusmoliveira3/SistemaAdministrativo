@@ -1,0 +1,81 @@
+﻿@using Colex.ViewModel
+@model List<CapacidadeViewModels>
+
+@section Styles{
+    <link rel="stylesheet" href="/css/Capacidade/Index.css" />
+    }
+
+
+
+<div id="navegacao-div">
+    <a id="novaCapacidade-btn" class="btn btn-success" href="/Capacidade/Cadastrar" role="button">Nova capacidade</a>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Index</li>
+        </ol>
+    </nav>
+</div>
+
+<h1 class="m-20 fs-35">Cadastrar Capacidade</h1>
+<div class="card" id="card-pesquisa">
+    <h2>Pesquisar capacidade</h2>
+
+    <div class="col-md-6">
+        <input id="inputPesquisarCapacidade" type="text" class="form-control ml-15 mb-25 mt-15 fs-25 " placeholder="Digite a capacidade" aria-label="First name">
+    </div>
+
+
+</div>
+<button id="btnPesquisarCapacidade" class="btn btn-primary" type="submit">Pesquisar</button>
+
+
+
+<div class="card mt-50" id="card-tabela">
+    <div class="card-block pt-2 pb-2 m-25" id="div-tabela">
+        <table id="tabela-Index" class="table table-hover" data-totalPagina="@ViewBag.TotalPagina">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Capacidade(Kg/L)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (CapacidadeViewModels capacidade in ViewBag.Capacidade)
+                {
+                    <tr>
+                        <td>@capacidade.Id</td>
+                        <td>@capacidade.CapacidadeCarga</td>
+                        <td>
+                            <a href="/capacidade/detalhe?id=@capacidade.Id">
+                                <i class="fa-solid fa-circle-info fa-lg" data-toggle="tooltip" data-placement="top" title="Detalhe do cliente"></i>
+                            </a>
+                            <a href="/capacidade/editar?id=@capacidade.Id">
+                                <i class="fa-solid fa-gear fa-lg" data-toggle="tooltip" data-placement="top" title="Alterar cliente"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="paginacao">
+
+            <a>
+                <i id="seta-esquerda" class="fa-solid fa-arrow-left-long fa-lg"></i>
+            </a>
+            <a>
+                <i id="seta-direita" class="fa-solid fa-arrow-right-long fa-lg"></i>
+            </a>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/Capacidade/CapacidadeIndex.js"></script>
+}

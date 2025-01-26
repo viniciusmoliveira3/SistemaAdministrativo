@@ -1,0 +1,52 @@
+﻿@using Colex.ViewModel
+@model RelatorioItensViewModels;
+
+
+
+<link rel="stylesheet" href="~/css/Relatorios/RelatorioExtintorSelo.css" />
+
+<div id="printable">
+    <table class="tg">
+        <thead>
+            <tr>
+                <th class="tg-baqh" colspan="7"><b>Relatório de rastreio por selo</b> </th>
+            </tr>
+            <tr>
+                <td id="numeroSelo"class="tg-0lax" colspan="3">Nº do selo: @Model.NumSelo</td>
+                <td class="tg-0lax" colspan="2">Data: @DateTime.Now.ToString("dd/MM/yyyy") </td>
+                <td class="tg-0lax" colspan="2">Cliente: @Model.Os.Cliente.NomeFantasia</td>
+            </tr>
+            <tr>
+                <td class="tg-0lax">N do selo</td>
+                <td class="tg-0lax">Nº do extintor</td>
+                <td class="tg-0lax">Data da recarga</td>
+                <td class="tg-0lax">Capacidade</td>
+                <td class="tg-0lax">Tipo </td>
+                <td class="tg-0lax">Lote mat. prima</td>
+                <td class="tg-0lax">Ano de fabricação</td>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td class="tg-0lax">@Model.NumSelo </td>
+                <td class="tg-0lax">@Model.Extintor.NumeroCilindro</td>
+                <td class="tg-0lax">@Model.Os.DataAbertura.ToString("dd/MM/yyyy")</td>
+                <td class="tg-0lax">@Model.Extintor.Capacidade.CapacidadeCarga</td>
+                <td class="tg-0lax">@Model.Extintor.MateriaPrima.Nome</td>
+                <td class="tg-0lax">@Model.Extintor.Lote</td>
+                <td class="tg-0lax">@Model.Extintor.AnoFabricacao</td>
+            </tr>
+        </tbody>
+    </table>
+    <div data-html2canvas-ignore="true" id="botoesRelatorio" class="d-grid gap-3 d-md-block">
+        <a id="botaoVoltar" class="btn btn-primary" href="~/Home/Index" role="button">Voltar</a>
+        <button id="btnSalvar" class="btn btn-primary">Salvar</button>
+        <button id="btnImprimir" class="btn btn-primary">Imprimir</button>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/Relatorio/RelatorioExtintorSelo.js"></script>
+}

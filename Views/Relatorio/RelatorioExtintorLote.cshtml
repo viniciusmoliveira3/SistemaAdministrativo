@@ -1,0 +1,60 @@
+﻿@using Colex.ViewModel;
+@model List<RelatorioItensViewModels>;
+
+
+<link rel="stylesheet" href="~/css/Relatorios/RelatorioExtintorLote.css" />
+
+
+<div id="printable">
+    <table class="tg">
+        <thead>
+            <tr>
+              
+                <td class="tg-c3ow" colspan="7"><b>Relatório de rastreio por matéria prima</b></td>
+            
+            </tr>
+            <tr>
+                <td id="materiaPrima" class="tg-0pky" colspan="3">Matéria-prima: @TempData["MateriaPrima"]</td>
+                <td class="tg-0pky" colspan="2">Lote: @TempData["Lote"]</td>
+                <td class="tg-0pky" colspan="2">Data: @DateTime.Now.ToString("dd/MM/yyyy")</td>
+            </tr>
+            <tr>
+                <td class="tg-0pky">Item</td>
+                <td class="tg-0pky">Nº extintior</td>
+                <td class="tg-0pky">Fabricante</td>
+                <td class="tg-0pky">Capacidade</td>
+                <td class="tg-0pky">Data Recarga</td>
+                <td class="tg-0pky">Cliente</td>
+                <td class="tg-0pky">Selo</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+            }
+            @foreach (Colex.ViewModel.RelatorioItensViewModels extintiorItens in ViewBag.ExtintiorLote)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@extintiorItens.Extintor.NumeroCilindro</td>
+                    <td>@extintiorItens.Extintor.MarcaExtintor.Nome</td>
+                    <td>@extintiorItens.Extintor.Capacidade.CapacidadeCarga</td>
+                    <td>@extintiorItens.Os.DataAbertura.ToString("dd/MM/yyyy")</td>
+                    <td>@extintiorItens.Os.Cliente.NomeFantasia</td>
+                    <td>@extintiorItens.NumSelo</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+    <div data-html2canvas-ignore="true" id="botoesRelatorio" class="d-grid gap-3 d-md-block">
+        <a id="botaoVoltar" class="btn btn-primary" href="~/Home/Index" role="button">Voltar</a>
+        <button id="btnSalvar" class="btn btn-primary">Salvar</button>
+        <button id="btnImprimir" class="btn btn-primary">Imprimir</button>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/Relatorio/RelatorioExtintiorLote.js"></script>
+
+}

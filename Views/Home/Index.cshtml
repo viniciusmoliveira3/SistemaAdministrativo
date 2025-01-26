@@ -1,0 +1,281 @@
+﻿<link rel="stylesheet" href="~/css/Shared.css" />
+
+
+<div id="logo">
+    <img src="/Img/colexLogo.jpg" />
+</div>
+
+
+<div class="modal fade" id="RelatorioExtintorCliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Buscar extintiores por cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dados-busca">
+                    <form class="row" asp-controller="Relatorio" asp-action="RelatorioExtintorCliente" method="get">
+                        <div class="row">
+                            <h4>Digite o cliente</h4>
+                            <div class="col-md-8">
+                                <label for="clienteBusca" class="form-label">Cliente</label>
+                                <input id="clienteBusca" type="text" class="form-control" placeholder="Digite o cliente">
+                                <input type="hidden" id="IdCliente" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="Data" class="form-label">Ano</label>
+                                <input id="Data" type="number" class="form-control" placeholder="Digite o ano">
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnRelatorioExtintorCliente" type="button" class="btn btn-primary">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="RelatorioExtintorSelo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Buscar extintiores por selo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dados-busca">
+                    <form class="row" asp-controller="Relatorio" asp-action="RelatorioExtintorSelo" method="get">
+                        <div class="row">
+                            <h4>Digite o selo</h4>
+                            <div class="col-md-8">
+                                <label for="Selo" class="form-label">Selo</label>
+                                <input id="Selo" type="text" class="form-control" placeholder="Digite o selo">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnRelatorioExtintorSelo" type="button" class="btn btn-primary">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="RelatorioExtintorLote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Buscar extintiores por lote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dados-busca">
+                    <form class="row" asp-controller="Relatorio" asp-action="RelatorioExtintintorLote" method="get">
+                        <div class="row">
+                            <h4>Selecione a matéria-prima</h4>
+                            <div class="col-md-6">
+                                <label for="TipoCarga" class="form-label">Matéria-prima</label>
+                                <select id="TipoCarga" class="form-select">
+                                    <option value="0" selected>Matéria-prima</option>
+                                    @foreach (Colex.ViewModel.MateriaPrimaViewModels materia in ViewBag.MateriaPrima)
+                                    {
+                                        <option value="@materia.Id">@materia.Nome</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Lote" class="form-label">Lote</label>
+                                <input id="Lote" type="text" class="form-control" placeholder="Digite o lote">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnRelatorioExtintorLote" type="button" class="btn btn-primary">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="etiquetas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Imprimir etiquetas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dados-busca">
+                    <form class="row" asp-controller="Etiquetas" asp-action="GerarEtiquetas" method="get">
+                        <div class="row">
+                            <h4>Digite a Os e o ano</h4>
+                            <div class="col-md-8">
+                                <label for="numeroOs" class="form-label">Nº da Os</label>
+                                <input id="numeroOs" type="text" class="form-control" placeholder="Digite a os">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="dataEtiqueta" class="form-label">Ano</label>
+                                <input id="dataEtiqueta" type="text" class="form-control" placeholder="Digite o ano">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnEtiquetas" type="button" class="btn btn-primary">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="etiquetasIndividual" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Imprimir etiquetas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dados-busca">
+                    <form class="row" asp-controller="Etiquetas" asp-action="GerarEtiquetas" method="get">
+                        <div class="row">
+                            <h4>Digite a Os e o ano</h4>
+                            <div class="col-md-8">
+                                <label for="numeroExtintor" class="form-label">Nº do extintor</label>
+                                <input id="numeroExtintor" type="text" class="form-control" placeholder="Nº do extintor">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="dataEtiqueta" class="form-label">Ano</label>
+                                <input id="dataEtiquetaIndividual" type="text" class="form-control" placeholder="Digite o ano">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnEtiquetasIndividual" type="button" class="btn btn-primary">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="etiquetasTemporaria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Imprimir etiquetas tempoararias</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dados-busca">
+                    <form class="row" asp-controller="Etiquetas" asp-action="GerarEtiquetasTemporaria" method="get">
+                        <div class="row">
+                            <h4>Escolha o tipo, mês do vencimento, o próximo teste e o tipo de manutenção</h4>
+                            <div class="col-md-2">
+                                <label for="TipoCargaTempo" class="form-label">Matéria-prima</label>
+                                <select id="TipoCargaTempo" class="form-select">
+                                    <option value="0" selected>Matéria-prima</option>
+                                    @foreach (Colex.ViewModel.MateriaPrimaViewModels materia in ViewBag.MateriaPrima)
+                                    {
+                                        <option value="@materia.Nome">@materia.Nome</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="mes" class="form-label">Mês</label>
+                                <select id="mes" class="form-select">
+                                    <option value="0" selected>mes</option>
+                                    @foreach (var meses in ViewBag.Meses)
+                                    {
+                                        <option value="@meses">@meses</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="anoProximaManu" class="form-label">Ano da prox manut.</label>
+                                <input id="anoProximaManu" type="text" class="form-control" placeholder="Digite o ano">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="dataEtiquetaTemporaria" class="form-label">Ano</label>
+                                <input id="dataEtiquetaTemporaria" type="text" class="form-control" placeholder="Digite o ano">
+                            </div>
+                            <div class="col-md-1">
+                                <label for="manutencao" class="form-label">Manutencao</label>
+                                <input id="manutencao" type="text" class="form-control">
+                            </div>
+                            <div class="col-md-1">
+                                <label for="qtd" class="form-label">Quantidade</label>
+                                <input id="qtd" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnEtiquetasTem" type="button" class="btn btn-primary">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="RelatorioPorExtintor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Relatório por extintor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dados-busca">
+                    <form class="row" asp-controller="Relatorio" asp-action="RelatorioExtintor" method="get">
+                        <div class="row">
+                            <h4>Digite o número do extintor</h4>
+                            <div class="col-md-8">
+                                <label for="nuemroExtintorCilindo" class="form-label">Nº do extintor</label>
+                                <input id="nuemroExtintorCilindo" type="text" class="form-control" placeholder="Digite o nº do extintor ">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnRelatorioExtintor" type="button" class="btn btn-primary">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@if (TempData["Error-Etiquetas"] != null)
+{
+    <span id="notify" class="d-none" data-type="errorEtiquetas">@TempData["Error-Etiquetas"]</span>
+}
+@if (TempData["Error-Etiqueta"] != null)
+{
+    <span id="notify" class="d-none" data-type="errorEtiquetas">@TempData["Error-Etiqueta"]</span>
+}
+@if (TempData["Error-RelatorioLote"] != null)
+{
+    <span id="notify" class="d-none" data-type="errorRelatorio">@TempData["Error-RelatorioLote"]</span>
+}
+@if (TempData["Error-RelatorioCliente"] != null)
+{
+    <span id="notify" class="d-none" data-type="errorRelatorio">@TempData["Error-RelatorioCliente"]</span>
+}
+@if (TempData["Error-RelatorioSelo"] != null)
+{
+    <span id="notify" class="d-none" data-type="errorRelatorio">@TempData["Error-RelatorioSelo"]</span>
+}
+@if (TempData["Error-RelatorioExtintor"] != null)
+{
+    <span id="notify" class="d-none" data-type="errorRelatorio">@TempData["Error-RelatorioExtintor"]</span>
+}
+
+@section Scripts{
+    <script src="/js/Home/Home.js" ></script>
+}

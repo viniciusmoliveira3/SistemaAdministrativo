@@ -1,0 +1,142 @@
+﻿@using Colex.ViewModel;
+@using System.Globalization;
+
+@model OrcamentoViewModels;
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Orcamento/OrcamentoPdf.css" />
+}
+@{
+
+    CultureInfo br = new CultureInfo("pt-BR");
+    string auxCNPJ = "";
+    if (Model.Cnpj != "" && Model.Cnpj != null)
+    {
+        auxCNPJ = Model.Cnpj;
+        auxCNPJ = auxCNPJ[0].ToString() + auxCNPJ[1] + "." + auxCNPJ[2] + auxCNPJ[3] + auxCNPJ[4] + "." + auxCNPJ[5] + auxCNPJ[6] + auxCNPJ[7] + "/" + auxCNPJ[8] + auxCNPJ[9] + auxCNPJ[10] + auxCNPJ[11] + "-" + auxCNPJ[12] + auxCNPJ[13];
+    }
+    var cep = "";
+    if (Model.Cep != null)
+    {
+        if (Model.Cep.Length == 8){
+            var cepaux = Model.Cep;
+            cep = cepaux[0].ToString() + cepaux[1] + cepaux[2] + cepaux[3] + "-" + cepaux[4] + cepaux[5] + cepaux[6];
+        }
+        else{
+            cep = Model.Cep;
+        }
+       
+    }
+    var telefone = "";
+    if (Model.Telefone != null)
+    {
+
+        if (Model.Telefone.Length == 10)
+        {
+            var telefoneaux = Model.Telefone;
+            telefone = "(" + telefoneaux[0].ToString() + telefoneaux[1] + ")" + telefoneaux[2] + telefoneaux[3]
+            + telefoneaux[4] + telefoneaux[5] + " - " + telefoneaux[6] + telefoneaux[7] + telefoneaux[8] + telefoneaux[9];
+        }
+        else
+        {
+            if (Model.Telefone.Length == 11)
+            {
+                var telefoneaux = Model.Telefone;
+                telefone = "(" + telefoneaux[0].ToString() + telefoneaux[1] + ")" + telefoneaux[2] + telefoneaux[3]
+                + telefoneaux[4] + telefoneaux[5] + telefoneaux[6] + "-" + +telefoneaux[7] + telefoneaux[8] + telefoneaux[9] + telefoneaux[10];
+            }
+            else{
+                telefone = Model.Telefone;
+            }
+        }
+      
+    }
+
+
+
+}
+
+
+
+<br />
+<br />
+<table class="tg">
+    <thead>
+        <tr>
+            <th id="img" class="tg-0pky" colspan="2"><img src="~/Img/logoSemfundo.png" /></th>
+            <th id="cabecalho-pdf" class="tg-0pky" colspan="6"><span><b>J.G RIO PRETO COMERCIO E MANUTENÇÃO LTDA</b><br />Rua Dr José Jorge Cury 360 - São José do Rio Preto - SP<br />CNPJ: 24.540.851/0001-95 E-mail:colexextintores@yahoo.com<br />Tel:(17)3238-3811/WhatsApp:(17)3513-6400</span></th>
+        </tr>
+
+        <tr>
+            <td class="tg-0pky" colspan="1">Orçamento: @Model.IdOrcamento </td>
+            <td class="tg-0pky" colspan="3">Compra.: @Model.Comprador</td>
+            <td class="tg-0pky" colspan="3">Vend.: @Model.Vendedor</td>
+            <td class="tg-0pky" colspan="1">Data: @Model.DataCriacao.ToString("dd/MM/yyyy")</td>
+
+        </tr>
+        <tr>
+            <td class="tg-c3ow" colspan="8"><b>Cliente</b></td>
+        </tr>
+        <tr>
+            <td id="nomeCliente" class="tg-0pky" colspan="6">Nome: @Model.Cliente</td>
+            <td class="tg-0pky" colspan="2">CNPJ: @auxCNPJ</td>
+        </tr>
+        <tr>
+            <td class="tg-0pky" colspan="8">Endereço: @Model.Endereco.ToUpper() | @Model.Bairro.ToUpper() </td>
+        </tr>
+        <tr>
+            <td class="tg-0pky" colspan="1">CEP: @cep </td>
+            <td class="tg-0pky" colspan="5">Cidade: @Model.Cidade.ToUpper() </td>
+            <td class="tg-0pky" colspan="2">Telefone: @telefone </td>
+        </tr>
+        <tr><td id="separacao" class="tg-0pky" colspan="8"></td></tr>
+        <tr>
+            <td class="tg-c3ow" colspan="8"><b>Orçamento</b></td>
+        </tr>
+        <tr>
+            <td class="tg-0pky cabecalho" colspan="5"><b>Produtos/Serviço</b></td>
+            <td class="tg-0pky cabecalho"><b>Quantidade</b></td>
+            <td class="tg-0pky cabecalho"><b>Unitário</b></td>
+            <td class="tg-0pky cabecalho"><b>Valor</b></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (OrcamentoProdutoViewModels orcamento in ViewBag.OrcamentoProdutos)
+        {
+            var materiaPrima = "";
+            materiaPrima = orcamento.MateriaPrima != null ? orcamento.MateriaPrima.Nome.ToUpper() : "";
+
+            <tr>
+                <td class="tg-0pky" colspan="5">@orcamento.Nome @materiaPrima</td>
+                <td class="tg-0pky">@orcamento.Quantidade</td>
+                <td class="tg-0pky">@orcamento.ValorUnitario.ToString("C", br)</td>
+                <td class="tg-0pky">@orcamento.ValorTotal.ToString("C", br)</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="tg-0pky" colspan="5"></td>
+            <td class="tg-0pky" colspan="2">Total</td>
+            <td class="tg-0pky" colspan="1"><span>@Model.ValorFinal.ToString("C", br)</span> </td>
+        </tr>
+        <tr>
+            <td class="tg-0pky" @* rowspan="4" *@ colspan="8">Nota: @Model.Nota</td>
+        </tr>
+        <tr>
+            <td class="tg-0pky" colspan="8" rowspan="4">Observação: @Model.Observacao</td>
+        </tr>
+    </tfoot>
+</table>
+<br />
+<div data-html2canvas-ignore="true" id="botoesOrcamento" class="d-grid gap-3 d-md-block">
+    <a id="botaoVoltar" class="btn btn-primary" href="~/Orcamento/Cadastrar" role="button">Novo Orcamento</a>
+    <button id="botaoSalvar" class="btn btn-primary">Salvar</button>
+    <button id="btnImprimir" class="btn btn-primary">Imprimir</button>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/Orcamento/OrcamentoPdf.js"></script>
+}

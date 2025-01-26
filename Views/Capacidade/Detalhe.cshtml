@@ -1,0 +1,37 @@
+﻿@using Colex.ViewModel;
+@model CapacidadeViewModels;
+
+
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Capacidade/Capacidade.css" />
+}
+
+<div id="navegacao-div">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item"><a href="~/Capacidade/Index">Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalhe</li>
+        </ol>
+    </nav>
+</div>
+
+
+<h1>Detalhe capacidade</h1>
+<div class="card mt-50" id="card-tabela">
+    <div id="container-tabela">
+        <form class="row" asp-controller="Capacidade" asp-action="Detalhe" method="get">
+            <div class="col-md-4">
+                <label asp-for="CapacidadeCarga" class="form-label">Capacidade(Kg/L)</label>
+                <input asp-for="CapacidadeCarga" type="text" class="form-control" placeholder="Digite a capacidade" disabled>
+            </div>
+        </form>
+    </div>
+</div>

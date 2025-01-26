@@ -1,0 +1,44 @@
+﻿@using Colex.ViewModel;
+@model RelatorioItensViewModels;
+
+<link rel="stylesheet" href="~/css/Etiquetas/Etiquetas.css" />
+
+<div id="printable">
+    <div data-html2canvas-ignore="true" id="botaoEtiquetas" class="d-grid gap-3 d-md-block">
+        <a id="botaoVoltar" class="btn btn-primary" href="~/Home/Index" role="button">Voltar</a>
+        <button id="btnImprimir" class="btn btn-primary">Imprimir</button>
+    </div>
+    <br />
+        <input type="hidden" id="idExtintor" value="@Model.IdExtintor" />
+        <table class="tg">
+        <thead>
+            <tr>
+                <th class="tg-0pky" colspan="3" rowspan="2"><span id="cabecalho" style="font-weight:bold"><img id="logo" src="~/Img/capturalogo-removebg-preview.png" /> COLEX EXTINTORES<br>J.G Rio Preto Comércio e Serviço Ltda-ME<br>R.Dr José Jorge Cury, 370 - S.J do Rio Preto - SP<br>CNPJ: 24.540.851/0001-95<br>Tel:(17)3238-3811/ (17)3513-6400<span class="qrcode"></span></span></th>
+            </tr>
+            <tr>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="tg-0pky"><span id="dataTop" style="font-weight:bold">Próx. Manut. 2º nível:</span><br /><span style="font-weight:bold" id="datas">@Model.DataProximaRecarga.ToString("MMM yyyy", System.Globalization.CultureInfo.GetCultureInfo("pt-BR")).ToUpper()</span></td>
+                <td class="tg-0pky"><span id="dataTop" style="font-weight:bold">Próx Manut 3º nível:</span><br /><span style="font-weight:bold" id="datas">@Model.Extintor.ProximoEnsaioHisdrostatico</span></td>
+                <td class="tg-0pky"><span id="dataTop" style="font-weight:bold">Manute. Realizada:</span><br /><span style="font-weight:bold" id="datas">NIVEL: @Model.NivelManutencao</span></td>
+            </tr>
+            <tr>
+                <td colspan="3"><span style="font-weight:bold" id="cliente">Cliente: @Model.Os.Cliente.NomeFantasia.ToUpper()</span></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="tg-0pky"><span id="cargaTipo" style="font-weight:bold">Tipo: @Model.Extintor.MateriaPrima.Nome.ToUpper() | Carga: @Model.Extintor.Capacidade.CapacidadeCarga (kg/L)</span></td>
+                <td class="tg-0pky"><span id="cilindro" style="font-weight:bold">Num cilindro:<br /> @Model.Extintor.NumeroCilindro</span></td>
+            </tr>
+            <tr>
+                <td colspan="3"><span id="descricao" style="font-weight:bold">Garantia valida por 1 ano. A inspeção mensal dever ser feita pelo proprietário. <br />  Suspensão de garantia: - Violação do lacre selo Inmetro,  anel, uso inadequado,<br /> e danos ao equipamento</span></td>
+
+            </tr>
+        </tbody>
+        </table>
+        <br />
+</div>
+<script src="~/QrCode/qrcode.min.js"></script>
+
+<script src="~/js/Etiquetas/Etiquetas.js"></script>

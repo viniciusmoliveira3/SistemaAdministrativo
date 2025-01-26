@@ -1,0 +1,1089 @@
+﻿@using Colex.ViewModel;
+@using System.Text
+@using Newtonsoft.Json
+@model OsViewModels;
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/OrdemServico/EditarOs.css" />
+}
+<div id="cabecalho-botao">
+    <div id="btnsCadastrar">
+        <button id="btnCadastrarExtintor" type="button" class="btn btn-success"> Novo extintor</button>
+        <button id="botaoAlterarExtintor" type="button" class="btn btn-success">Alterar extintor</button>
+    </div>
+    <h1>Editar relatório de inspeção e manutenção</h1>
+</div>
+
+<div id="container-os">
+    <div class="card mt-50" id="card-tabela">
+        <div id="container-tabela">
+            <form class="row" asp-controller="Os" asp-action="Editar" method="post">
+                <h4>Dados do Cliente</h4>
+
+                <div class="col-md-2">
+                    <label asp-for="DataAbertura" class="form-label">Data da abertura*</label>
+                    <input asp-for="DataAbertura" type="date" class="form-control" placeholder="dd/MM/AAAA">
+                    <input asp-for="IdOServico" type="hidden" class="form-control">
+
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Cliente.NomeFantasia" class="form-label">Cliente*</label>
+                    <input asp-for="Cliente.NomeFantasia" type="text" class="form-control">
+                    <input asp-for=IdCliente type="hidden" asp-for="Cliente.Id" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Cliente.EnderecoSocial" class="form-label">Endereço</label>
+                    <input asp-for="Cliente.EnderecoSocial" type="text" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Cliente.Bairro" class="form-label">Bairro</label>
+                    <input asp-for="Cliente.Bairro" type="text" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Cliente.Cidade" class="form-label">Cidade</label>
+                    <input asp-for="Cliente.Cidade" type="text" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="NumeroOrdemServico" class="form-label">Nº Ordem de serviço*</label>
+                    <input asp-for="NumeroOrdemServico" type="text" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group form-custom">
+                        <label asp-for="IdRepresentante" class="form-label">Representante*</label>
+                        <select asp-for="IdRepresentante" class="form-select">
+                            <option value="0">Selecione</option>
+                            @foreach (RepresentanteViewModels representante in ViewBag.Representante)
+                            {
+                                <option value="@representante.Id">@representante.NomeFantasia</option>
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div id="container-relatorioitens">
+                    <div id="dados-extintor">
+                        <div class="row">
+                            <h4>Dados do extintor</h4>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="tipoPesquisa" class="form-label">Selecione a busca</label>
+                                    <select id="tipoPesquisa" class="form-select">
+                                        <option value="leitor">Leitor</option>
+                                        <option value="numeroExtintor">Número do Extintor</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="div-NumeroCilindro" class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="NumeroCilindro" class="form-label">Nª do cilindro*</label>
+                                    <input id="NumeroCilindro" type="text" class="form-control" placeholder="Digite o nª do cilindro">
+                                    <input type="hidden" id="IdExtintor" />
+                                </div>
+
+                            </div>
+                            <div id="div-Ano" class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="AnoFabricacao" class="form-label">Ano Fabric.</label>
+                                    <input id="AnoFabricacao" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="EnsaioHidrostatico" class="form-label">Últ. teste</label>
+                                    <input id="EnsaioHidrostatico" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="IdMarcaExtintor" class="form-label">Fabricante</label>
+                                    <select id="IdMarcaExtintor" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (MarcaExtintorViewModels marca in ViewBag.MarcaExtintor)
+                                        {
+                                            <option value="@marca.Id">@marca.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="IdMateriaPrima" class="form-label">Tipo</label>
+                                    <select id="IdMateriaPrima" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (MateriaPrimaViewModels materia in ViewBag.MateriaPrima)
+                                        {
+                                            <option value="@materia.Id">@materia.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="IdCapa cidade" class="form-label">Carga Nom.</label>
+                                    <select id="IdCapacidade" class="form-select">
+                                        <option value="0">KG/L</option>
+                                        @foreach (CapacidadeViewModels capacidade in ViewBag.Capacidade)
+                                        {
+                                            <option value="@capacidade.Id">@capacidade.CapacidadeCarga</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="NBR" class="form-label">Norma de Fabr.</label>
+                                    <input id="NBR" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="ProximoEnsaioHisdrostatico" class="form-label">Próx. teste</label>
+                                    <input id="ProximoEnsaioHisdrostatico" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="CapacExtintora" class="form-label">Capac.Extin.</label>
+                                    <input id="CapacExtintora" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="Projeto" class="form-label"> Cód. Projeto</label>
+                                    <input id="Projeto" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="Lote" class="form-label">Lote</label>
+                                    <input id="Lote" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="DataProximaRecarga" class="form-label">Próxima recarga</label>
+                                    <input id="DataProximaRecarga" type="text" class="form-control">
+                                    <input id="DataProximaRecargaHidden" value=" @TempData["ProximaDataRecarga"]" type="hidden">
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="SeloAnterior" class="form-label">Selo anterior</label>
+                                    <input id="SeloAnterior" type="text" class="form-control">
+
+                                </div>
+                            </div>
+                            <div id="checkbox-reaproveitado" class="col-md-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" id="Reaproveitado" type="checkbox">
+                                    <label class="form-check-label" for="Reaproveitado">Pó reaproveitado.</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h4>Insp./Ensaios</h4>
+                    <div id="Insp-ensaio">
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="NivelManutencao" class="form-label">Nivel Manutenção*</label>
+                                <input id="NivelManutencao" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div id="checkbox-insp">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="EnsaioIndPre" type="checkbox">
+                                <label class="form-check-label" for="EnsaioIndPre">Ensaio Ind. Pre.</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="EnsaioVazVal" type="checkbox">
+                                <label class="form-check-label" for="EnsaioVazVal">Ensaio Vaz. Val.</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="VisualIntacto">
+                                <label class="form-check-label" for="VisualIntacto">Vizual Int.</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="InspRosca" type="checkbox">
+                                <label class="form-check-label" for="InspRosca">Insp. Rosca</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="Pintura" type="checkbox">
+                                <label class="form-check-label" for="Pintura">Pintura</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div id="pecas">
+                        <div class="row">
+                            <h4>Peças</h4>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="IdComponente1" class="form-label">Componente 1</label>
+                                    <select id="IdComponente1" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (ComponenteViewModels componente in ViewBag.Componente1)
+                                        {
+                                            <option value="@componente.Id">@componente.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="IdComponente2" class="form-label">Componente 2</label>
+                                    <select id="IdComponente2" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (ComponenteViewModels componente in ViewBag.Componente2)
+                                        {
+                                            <option value="@componente.Id">@componente.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="IdComponente3" class="form-label">Componente 3</label>
+                                    <select id="IdComponente3" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (ComponenteViewModels componente in ViewBag.Componente3)
+                                        {
+                                            <option value="@componente.Id">@componente.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="IdComponente4" class="form-label">Componente 4</label>
+                                    <select id="IdComponente4" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (ComponenteViewModels componente in ViewBag.Componente4)
+                                        {
+                                            <option value="@componente.Id">@componente.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="ensaio">
+                        <div class="row">
+                            <h4>Ensaio Pneumático e hidrostático</h4>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="PesoCilindroVazio" class="form-label">Peso Cil. Vazio</label>
+                                    <input id="PesoCilindroVazio" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="PesoComAgua" class="form-label">Peso Cil. c/ água</label>
+                                    <input id="PesoComAgua" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="VolumeLitros" class="form-label">Volume em Litros</label>
+                                    <input id="VolumeLitros" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="CapacidadeMaxima" class="form-label">Capacidade Maxima</label>
+                                    <input id="CapacidadeMaxima" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="PressaoTrabalho" class="form-label">Pressão Trabalho</label>
+                                    <input id="PressaoTrabalho" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="PressaoTesteCilindro" class="form-label">Pressão Teste Cil.</label>
+                                    <input id="PressaoTesteCilindro" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="PressaoTesteMangueira" class="form-label">Pressao Teste Mang</label>
+                                    <input id="PressaoTesteMangueira" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="PressaoTesteManometro" class="form-label">Pressao Teste Manô</label>
+                                    <input id="PressaoTesteManometro" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="PressaoTesteValvula" class="form-label">Pressao Teste válv.</label>
+                                    <input id="PressaoTesteValvula" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="DefInstantanea" class="form-label">Def Instantânea</label>
+                                    <input id="DefInstantanea" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="DefPermanente" class="form-label">Def Permanente</label>
+                                    <input id="DefPermanente" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="PorcEpEt" class="form-label">Porc<br /> Ep/Et</label>
+                                    <input id="PorcEpEt" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="TaraGravada" class="form-label">Tara Gravada</label>
+                                    <input id="TaraGravada" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="TaraReal" class="form-label">Tara<br /> Real</label>
+                                    <input id="TaraReal" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="PerdaMassa" class="form-label">Perda Massa</label>
+                                    <input id="PerdaMassa" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="MotivoRepro" class="form-label">Motivo Repro</label>
+                                    <input id="MotivoRepro" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-custom">
+                                    <label for="LaudoAR" class="form-label">Laudo <br /> A/R</label>
+                                    <input id="LaudoAR" type="text" class="form-control" pattern="\d*">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="NumSelo" class="form-label">Selo <br />Inmetro*</label>
+                                    <input id="NumSelo" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="btn-add-extintor" class="btn btn-sm btn-success btn-round">Adicionar</button>
+
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover" id="tabela-relatorio">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Cilíndro</th>
+                                <th>Ano de Fabricação</th>
+                                <th>Selo</th>
+                                <th>Fabricante</th>
+                                <th></th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var index = 0;
+                                int index2 = 1;
+
+                            }
+
+                            @foreach (RelatorioItensViewModels item in ViewBag.RelatorioItens)
+                            {
+                                StringBuilder str = new StringBuilder();
+                                str.Append("{IdRelatorioItem:" + item.IdRelatorioItens + ",");
+                                str.Append("IdOServico:" + item.IdOServico + ",");
+                                str.Append("IdExtintor:" + item.IdExtintor + ",");
+                                str.Append("NumeroCilindro:'" + item.Extintor.NumeroCilindro + "'}");
+                                var json = JsonConvert.DeserializeObject(str.ToString());
+                                <tr data-index="@index">
+                                    <td>@index2</td>
+                                    <td> @item.Extintor.NumeroCilindro</td>
+                                    <td>
+                                        @item.Extintor.AnoFabricacao
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.NumeroCilindro" value="@item.Extintor.NumeroCilindro" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.AnoFabricacao" value="@item.Extintor.AnoFabricacao" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.EnsaioHidrostatico" value="@item.Extintor.EnsaioHidrostatico" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.IdMarcaExtintor" value="@item.Extintor.IdMarcaExtintor" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.IdCapacidade" value="@item.Extintor.IdCapacidade" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.IdMateriaPrima" value="@item.Extintor.IdMateriaPrima" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.NBR" value="@item.Extintor.NBR" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.ProximoEnsaioHisdrostatico" value="@item.Extintor.ProximoEnsaioHisdrostatico" />
+                                        <input type="hidden" name="RelatorioItens[@index].DataProximaRecarga" value="@item.DataProximaRecarga" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.Id" value="@item.Extintor.Id" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.Lote" value="@item.Extintor.Lote" />
+                                        <input type="hidden" name="RelatorioItens[@index].NivelManutencao" value="@item.NivelManutencao" />
+                                        <input type="hidden" name="RelatorioItens[@index].EnsaioIndPre" value="@item.EnsaioIndPre.ToString().ToLower()" />
+                                        <input type="hidden" name="RelatorioItens[@index].EnsaioVazVal" value="@item.EnsaioVazVal.ToString().ToLower()" />
+                                        <input type="hidden" name="RelatorioItens[@index].VisualIntacto" value="@item.VisualIntacto.ToString().ToLower()" />
+                                        <input type="hidden" name="RelatorioItens[@index].InspRosca" value="@item.InspRosca.ToString().ToLower()" />
+                                        <input type="hidden" name="RelatorioItens[@index].Pintura" value="@item.Pintura.ToString().ToLower()" />
+                                        <input type="hidden" name="RelatorioItens[@index].IdComponentes1" value="@item.IdComponentes1" />
+                                        <input type="hidden" name="RelatorioItens[@index].IdComponentes2" value="@item.IdComponentes2" />
+                                        <input type="hidden" name="RelatorioItens[@index].IdComponentes3" value="@item.IdComponentes3" />
+                                        <input type="hidden" name="RelatorioItens[@index].IdComponentes4" value="@item.IdComponentes4" />
+                                        <input type="hidden" name="RelatorioItens[@index].PesoCilindroVazio" value="@item.PesoCilindroVazio" />
+                                        <input type="hidden" name="RelatorioItens[@index].PesoComAgua" value="@item.PesoComAgua" />
+                                        <input type="hidden" name="RelatorioItens[@index].VolumeLitros" value="@item.VolumeLitros" />
+                                        <input type="hidden" name="RelatorioItens[@index].CapacidadeMaxima" value="@item.CapacidadeMaxima" />
+                                        <input type="hidden" name="RelatorioItens[@index].PressaoTrabalho" value="@item.PressaoTrabalho" />
+                                        <input type="hidden" name="RelatorioItens[@index].PressaoTesteCilindro" value="@item.PressaoTesteCilindro" />
+                                        <input type="hidden" name="RelatorioItens[@index].PressaoTesteMangueira" value="@item.PressaoTesteMangueira" />
+                                        <input type="hidden" name="RelatorioItens[@index].PressaoTesteManometro" value="@item.PressaoTesteManometro" />
+                                        <input type="hidden" name="RelatorioItens[@index].DefInstantanea" value="@item.DefInstantanea" />
+                                        <input type="hidden" name="RelatorioItens[@index].DefPermanente" value="@item.DefPermanente" />
+                                        <input type="hidden" name="RelatorioItens[@index].PorcEpEt" value="@item.PorcEpEt" />
+                                        <input type="hidden" name="RelatorioItens[@index].TaraGravada" value="@item.TaraGravada" />
+                                        <input type="hidden" name="RelatorioItens[@index].TaraReal" value="@item.TaraReal" />
+                                        <input type="hidden" name="RelatorioItens[@index].PerdaMassa" value="@item.PerdaMassa" />
+                                        <input type="hidden" name="RelatorioItens[@index].MotivoRepro" value="@item.MotivoRepro" />
+                                        <input type="hidden" name="RelatorioItens[@index].LaudoAR" value="@item.LaudoAR" />
+                                        <input type="hidden" name="RelatorioItens[@index].NumSelo" value="@item.NumSelo" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.CapacExtintora" value="@item.Extintor.CapacExtintora" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.Projeto" value="@item.Extintor.Projeto" />
+                                        <input type="hidden" name="RelatorioItens[@index].Reaproveitado" value="@item.Reaproveitado.ToString().ToLower()" />
+                                        <input type="hidden" name="RelatorioItens[@index].Extintor.SeloAnterior" value="@item.Extintor.SeloAnterior" />
+                                        <input type="hidden" name="RelatorioItens[@index].PressaoTesteValvula" value="@item.PressaoTesteValvula" />
+                                        <input type="hidden" name="RelatorioItens[@index].IdRelatorioItens" value="@item.IdRelatorioItens" />
+
+                                    </td>
+                                    <td>
+                                        @item.NumSelo
+                                    </td>
+                                    <td>
+                                        @item.Extintor.MarcaExtintor.Nome
+                                    </td>
+                                    <td>
+
+                                        <i class="bi bi-trash3-fill" style="font-size:24px;" data-extintor="@item.IdExtintor" data-toggle="tooltip" data-placement="top" title="Excluir extintor"></i>
+                                        <i class="bi bi-gear-fill" style="font-size:24px;"title="alterar extintor" data-json="@json"></i>
+                                    </td>
+
+                                </tr>
+                                index++;
+                                index2++;
+                            }   
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <button id="btn-cadastrar" type="submit" class="btn btn-primary">Cadastrar</button>
+                </div>
+                <input asp-for=ListRelItensExclusao id="itensExclusao" type="hidden" />
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Modaal *@
+<div class="modal fade" id="ModalExclusaoExtintor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="fundoTituloModal" class="modal-header">
+                <h5 class="Excluir extintor" id="modalExcluirTitulo">Excluir extintor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente apagar esse extintor?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button style="background:red" id="btnApagarExtintor" type="button" class="btn btn-primary">Apagar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalAlterarExtintor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alterar extintor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formularioAlterarExtintor">
+                    <div id="dados-extintor">
+                        <div class="row">
+                            <h4>Dados do extintor</h4>
+                            <div class="col-md-3">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarNumeroCilindro" class="form-label">Nª do cilindro</label>
+                                    <input id="AlterarNumeroCilindro" type="text" class="form-control" placeholder="Digite o nª do cilindro">
+                                    <input type="hidden" id="IdExtintor" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarAnoFabricacao" class="form-label">Ano Fabricação</label>
+                                    <input id="AlterarAnoFabricacao" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarEnsaioHidrostatico" class="form-label">Último teste</label>
+                                    <input id="AlterarEnsaioHidrostatico" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarIdMarcaExtintor" class="form-label">Fabricante</label>
+                                    <select id="AlterarIdMarcaExtintor" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (MarcaExtintorViewModels marca in ViewBag.MarcaExtintor)
+                                        {
+                                            <option value="@marca.Id">@marca.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarIdMateriaPrima" class="form-label">Tipo</label>
+                                    <select id="AlterarIdMateriaPrima" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (MateriaPrimaViewModels materia in ViewBag.MateriaPrima)
+                                        {
+                                            <option value="@materia.Id">@materia.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarIdCapacidade" class="form-label">Carga Nom.</label>
+                                    <select id="AlterarIdCapacidade" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (CapacidadeViewModels capacidade in ViewBag.Capacidade)
+                                        {
+                                            <option value="@capacidade.Id">@capacidade.CapacidadeCarga</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarNBR" class="form-label">Norma de Fabr.</label>
+                                    <input id="AlterarNBR" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarProximoEnsaioHisdrostatico" class="form-label">Próximo teste</label>
+                                    <input id="AlterarProximoEnsaioHisdrostatico" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarCapacExtintora" class="form-label">Capac. Extintora</label>
+                                    <input id="AlterarCapacExtintora" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarProjeto" class="form-label"> Cód. Projeto</label>
+                                    <input id="AlterarProjeto" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarLote" class="form-label"> Lote</label>
+                                    <input id="AlterarLote" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="AlterarSeloAnterior" class="form-label">Selo Anterior</label>
+                                    <input id="AlterarSeloAnterior" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnAlterarExtintor" type="button" class="btn btn-primary">Alterar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCadastrarExtintor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cadastrar extintor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formularioCadastrarExtintor">
+                    <div id="dados-extintor">
+                        <div class="row">
+                            <h4>Dados do extintor</h4>
+                            <div class="col-md-3">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarNumeroCilindro" class="form-label">Nª do cilindro</label>
+                                    <input id="CadastrarNumeroCilindro" type="text" class="form-control" placeholder="Digite o nª do cilindro">
+                                    <input type="hidden" id="IdExtintor" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarAnoFabricacao" class="form-label">Ano Fabricação</label>
+                                    <input id="CadastrarAnoFabricacao" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarEnsaioHidrostatico" class="form-label">Último teste</label>
+                                    <input id="CadastrarEnsaioHidrostatico" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarIdMarcaExtintor" class="form-label">Fabricante</label>
+                                    <select id="CadastrarIdMarcaExtintor" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (MarcaExtintorViewModels marca in ViewBag.MarcaExtintor)
+                                        {
+                                            <option value="@marca.Id">@marca.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarIdMateriaPrima" class="form-label">Tipo</label>
+                                    <select id="CadastrarIdMateriaPrima" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (MateriaPrimaViewModels materia in ViewBag.MateriaPrima)
+                                        {
+                                            <option value="@materia.Id">@materia.Nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarIdCapacidade" class="form-label">Carga Nom.</label>
+                                    <select id="CadastrarIdCapacidade" class="form-select">
+                                        <option value="0">Selecione</option>
+                                        @foreach (CapacidadeViewModels capacidade in ViewBag.Capacidade)
+                                        {
+                                            <option value="@capacidade.Id">@capacidade.CapacidadeCarga</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarrNBR" class="form-label">Norma de Fabr.</label>
+                                    <input id="CadastrarNBR" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarProximoEnsaioHisdrostatico" class="form-label">Próximo teste</label>
+                                    <input id="CadastrarProximoEnsaioHisdrostatico" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarCapacExtintora" class="form-label">Capac. Extintora</label>
+                                    <input id="CadastrarCapacExtintora" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarProjeto" class="form-label"> Cód. Projeto</label>
+                                    <input id="CadastrarProjeto" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarLote" class="form-label"> Lote</label>
+                                    <input id="CadastrarLote" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group form-custom">
+                                    <label for="CadastrarSeloAnterior" class="form-label">Selo Anterior</label>
+                                    <input id="CadastrarSeloAnterior" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnSalvarExtintor" type="button" class="btn btn-primary">Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCadastrarCliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cadastrar cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formularioCadastrarCliente">
+                    <div id="dados-cliente">
+                        <div class="row">
+                            <h4>Dados do cliente</h4>
+                            <div class="col-md-4">
+                                <label for="CadastrarNomeFantasia" class="form-label">Nome Fantasia</label>
+                                <input id="CadastrarNomeFantasia" type="text" class="form-control" placeholder="Digite o nome fantasia">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarRazaoSocial" class="form-label">Razão Social</label>
+                                <input id="CadastrarRazaoSocial" type="text" class="form-control" placeholder="Digite a razão social">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarCEP" class="form-label">CEP</label>
+                                <input id="CadastrarCEP" type="text" class="form-control" placeholder="00000-00" maxlength="9">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarEnderecoSocial" class="form-label">Endereço Social</label>
+                                <input id="CadastrarEnderecoSocial" type="text" class="form-control" placeholder="Rua">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarBairro" class="form-label">Bairro</label>
+                                <input id="CadastrarBairro" type="text" class="form-control" placeholder="Bairro">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarCidade" class="form-label">Cidade</label>
+                                <input id="CadastrarCidade" type="text" class="form-control" placeholder="Cidade">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarNumero" class="form-label">Número</label>
+                                <input id="CadastrarNumero" type="text" class="form-control" placeholder="Número">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="CadastrarUf" class="form-label">UF</label>
+                                <input id="CadastrarUf" type="text" class="form-control" placeholder="UF">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="CadastrarCNPJ" class="form-label">CNPJ</label>
+                                <input id="CadastrarCNPJ" type="text" class="form-control" placeholder="00.000.000/0000-00" maxlength="14">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarInscricaoEstadual" class="form-label">Inscrição Social</label>
+                                <input id="CadastrarInscricaoEstadual" type="text" class="form-control" placeholder="000.000.000.000" maxlength="15">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarEmail" class="form-label">Email</label>
+                                <input id="CadastrarEmail" type="text" class="form-control" placeholder="Digite um email válido">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarTelefone" class="form-label">Telefone</label>
+                                <input id="CadastrarTelefone" type="text" class="form-control" placeholder="(00)90000-0000" maxlength="14">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="CadastrarIdRepresentante" class="form-label">Representante</label>
+                                <select id="CadastrarIdRepresentante" class="form-select">
+                                    <option selected>Representante</option>
+                                    @foreach (RepresentanteViewModels representante in ViewBag.Representante)
+                                    {
+                                        <option value="@representante.Id">@representante.NomeFantasia</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnSalvarCliente" type="button" class="btn btn-primary">Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" id="modaAlterarRelItens" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content relItensModal">
+            <div id="container-alterarRelatorioitens">
+                <h4>Insp./Ensaios</h4>
+                <div id="Insp-ensaio">
+                    <div class="col-md-1">
+                        <div class="form-group form-custom">
+                            <label for="AlterarNivelManutencao" class="form-label">Nivel Manutenção*</label>
+                            <input id="AlterarNivelManutencao" type="text" class="form-control">
+                            <input id="IdRelatorioItem" type="hidden" class="form-control">
+                            <input id="IdExtintor" type="hidden" class="form-control">
+                            <input id="IdOrdemServico" type="hidden" class="form-control">
+                        </div>
+                    </div>
+                    <div id="checkbox-insp">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="AlterarReaproveitado" type="checkbox">
+                            <label class="form-check-label" for="AlterarReaproveitado">Pó reaproveitado.</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="AlterarEnsaioIndPre" type="checkbox">
+                            <label class="form-check-label" for="AlterarEnsaioIndPre">Ensaio Ind. Pre.</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="AlterarEnsaioVazVal" type="checkbox">
+                            <label class="form-check-label" for="AlterarEnsaioVazVal">Ensaio Vaz. Val.</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="AlterarVisualIntacto">
+                            <label class="form-check-label" for="AlterarVisualIntacto">Vizual Int.</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="AlterarInspRosca" type="checkbox">
+                            <label class="form-check-label" for="AlterarInspRosca">Insp. Rosca</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="AlterarPintura" type="checkbox">
+                            <label class="form-check-label" for="AlterarPintura">Pintura</label>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div id="pecas">
+                    <div class="row">
+                        <h4>Peças</h4>
+                        <div class="col-md-2">
+                            <div class="form-group form-custom">
+                                <label for="AlterarIdComponente1" class="form-label">Componente 1</label>
+                                <select id="AlterarIdComponente1" class="form-select">
+                                    <option value="0">Selecione</option>
+                                    @foreach (ComponenteViewModels componente in ViewBag.Componente1)
+                                    {
+                                        <option value="@componente.Id">@componente.Nome</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-custom">
+                                <label for="AlterarIdComponente2" class="form-label">Componente 2</label>
+                                <select id="AlterarIdComponente2" class="form-select">
+                                    <option value="0">Selecione</option>
+                                    @foreach (ComponenteViewModels componente in ViewBag.Componente2)
+                                    {
+                                        <option value="@componente.Id">@componente.Nome</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-custom">
+                                <label for="AlterarIdComponente3" class="form-label">Componente 3</label>
+                                <select id="AlterarIdComponente3" class="form-select">
+                                    <option value="0">Selecione</option>
+                                    @foreach (ComponenteViewModels componente in ViewBag.Componente3)
+                                    {
+                                        <option value="@componente.Id">@componente.Nome</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-custom">
+                                <label for="AlterarIdComponente4" class="form-label">Componente 4</label>
+                                <select id="AlterarIdComponente4" class="form-select">
+                                    <option value="0">Selecione</option>
+                                    @foreach (ComponenteViewModels componente in ViewBag.Componente4)
+                                    {
+                                        <option value="@componente.Id">@componente.Nome</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div id="ensaio">
+                    <div class="row">
+                        <h4>Ensaio Pneumático e hidrostático</h4>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarPesoCilindroVazio" class="form-label">Peso Cil. Vazio</label>
+                                <input id="AlterarPesoCilindroVazio" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarPesoComAgua" class="form-label">Peso Cil. c/ água</label>
+                                <input id="AlterarPesoComAgua" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarVolumeLitros" class="form-label">Volume em Litros</label>
+                                <input id="AlterarVolumeLitros" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarCapacidadeMaxima" class="form-label">Capacidade Maxima</label>
+                                <input id="AlterarCapacidadeMaxima" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarPressaoTrabalho" class="form-label">Pres. Trabalho</label>
+                                <input id="AlterarPressaoTrabalho" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarPressaoTesteCilindro" class="form-label">Pres. Teste Cil.</label>
+                                <input id="AlterarPressaoTesteCilindro" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarPressaoTesteMangueira" class="form-label">Pres.Teste Mang</label>
+                                <input id="AlterarPressaoTesteMangueira" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarPressaoTesteManometro" class="form-label">Pres.Teste Manô</label>
+                                <input id="AlterarPressaoTesteManometro" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarPressaoTesteValvula" class="form-label">Pres. Teste válv.</label>
+                                <input id="AlterarPressaoTesteValvula" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarDefInstantanea" class="form-label">Def Instantânea</label>
+                                <input id="AlterarDefInstantanea" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarDefPermanente" class="form-label">Def Permanente</label>
+                                <input id="AlterarDefPermanente" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarPorcEpEt" class="form-label">Porc<br /> Ep/Et</label>
+                                <input id="AlterarPorcEpEt" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarTaraGravada" class="form-label">Tara Gravada</label>
+                                <input id="AlterarTaraGravada" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarTaraReal" class="form-label">Tara<br /> Real</label>
+                                <input id="AlterarTaraReal" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarPerdaMassa" class="form-label">Perda Massa</label>
+                                <input id="AlterarPerdaMassa" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarMotivoRepro" class="form-label">Motivo Repro</label>
+                                <input id="AlterarMotivoRepro" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group form-custom">
+                                <label for="AlterarLaudoAR" class="form-label">Laudo <br /> A/R</label>
+                                <input id="AlterarLaudoAR" type="text" class="form-control" pattern="\d*">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-custom">
+                                <label for="AlterarNumSelo" class="form-label">Selo <br />Inmetro*</label>
+                                <input id="AlterarNumSelo" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="AlterarDataProximaRecarga" />
+                </div>
+                <button type="button" id="btn-alterar-relatorioitens" class="btn btn-sm btn-success btn-round">Alterar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+@if (TempData["EstoquePoBc"] != null)
+{
+    <span id="notify" class="d-none" data-type="bc">@TempData["EstoquePoBc"]</span>
+}
+@if (TempData["EstoquePoAbc"] != null)
+{
+    <span id="notify" class="d-none" data-type="abc">@TempData["EstoquePoAbc"]</span>
+}
+@if (TempData["EstoqueCo2"] != null)
+{
+    <span id="notify" class="d-none" data-type="co2">@TempData["EstoqueCo2"]</span>
+}
+@if (TempData["EstoqueEspMec"] != null)
+{
+    <span id="notify" class="d-none" data-type="espmec">@TempData["EstoqueEspMec"]</span>
+}
+@section Scripts {
+    <script src="~/js/Os/EditarOs.js"></script>
+
+}

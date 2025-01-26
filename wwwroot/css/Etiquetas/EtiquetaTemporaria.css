@@ -1,0 +1,107 @@
+﻿
+.tg {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+    .tg td {
+        border-color: black;
+        border-style: solid;
+        border-width: 4px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        overflow: hidden;
+        padding: 20px 5px;
+        word-break: normal;
+    }
+
+    .tg th {
+        border-color: black;
+        border-style: solid;
+        border-width: 4px;
+        font-family: Arial, sans-serif;
+        font-size: xx-large;
+        font-weight: normal;
+        overflow: hidden;
+        padding: 10px 5px;
+        word-break: normal;
+    }
+
+    .tg .tg-0pky {
+        border-color: inherit;
+        text-align: center;
+    }
+
+#logo {
+    width: 290px !important;
+}
+
+#datas {
+    font-size: 55px;
+    font-weight: bold;
+}
+
+img {
+    width: 150px;
+}
+
+@media print {
+    @page {
+        margin-top: 0.5mm;
+        margin-left: 6.0mm;
+        margin-right: 5mm;
+        margin-bottom: 0mm;
+    }
+
+    .container {
+        max-width: none !important;
+        width: 1890px !important;
+        margin: 0px, 0px,0px,0px !important;
+    }
+
+    #botaoEtiquetas, #navBar, #botaoVoltar, #btnImprimir {
+        display: none;
+    }
+}
+
+#cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+body {
+    line-height: 40px !important;
+}
+
+.container {
+    max-width: none !important;
+    width: 1890px !important;
+    margin: 0px, 0px,0px,0px !important;
+}
+
+table {
+    border-color: black !important;
+    border-style: solid !important;
+    border-width: 4px !important;
+}
+
+#cliente {
+    font-size: xx-large;
+}
+
+#cargaTipo {
+    font-size: xx-large;
+}
+
+#cilindro {
+    font-size: xx-large;
+}
+
+#descricao {
+    font-size: 32px;
+}
+
+#dataTop {
+    font-size: 28px;
+}

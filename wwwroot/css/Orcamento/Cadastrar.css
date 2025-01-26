@@ -1,0 +1,17 @@
+﻿#card-tabela{
+    padding:10px;
+}
+
+#cabecalho-produto{
+    display:flex;
+    align-items:center;
+    margin-top:20px;
+}
+
+#novaOrdem-btn{
+    margin-left:10px;
+}
+
+#btnEnviarProduto {
+    margin-left: 15px;
+}

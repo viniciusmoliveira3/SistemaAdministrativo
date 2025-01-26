@@ -1,0 +1,84 @@
+﻿@using Colex.ViewModel;
+@model SeloViewModels;
+
+
+
+
+
+@section Styles {
+            <link rel="stylesheet" href="~/css/Selo/Selo.css" />
+}
+
+<div id="navegacao-div">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item"><a href="~/Selo/Index">Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+    </nav>
+</div>
+<h1>Editar selo</h1>
+<div class="card mt-50" id="card-tabela">
+    <div id="container-tabela">
+        <form class="row" asp-controller="Selo" asp-action="Editar" method="post">
+            <div class="col-md-4">
+                <label asp-for="Data" class="form-label">Data</label>
+                <input asp-for="Data" type="date" class="form-control" placeholder="DD/MM/AA">
+            </div>
+            <div class="col-md-4">
+                <label asp-for="IdFornecedor" class="form-label">Grafica</label>
+                <select asp-for="IdFornecedor" class="form-select">
+                    <option selected>Fornecedor</option>
+                    @foreach (FornecedorViewModels fornecedor in ViewBag.Fornecedor)
+                    {
+                        <option value="@fornecedor.Id">@fornecedor.NomeFantasia</option>
+                    }
+
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="NF" class="form-label">Nota fiscal</label>
+                <input asp-for="NF" type="text" class="form-control" placeholder="Digite a NF">
+            </div>
+            <div class="col-md-4">
+                <label asp-for="NumeroInicial" class="form-label">Número Inicial</label>
+                <input asp-for="NumeroInicial" type="text" class="form-control" placeholder="Digite o número inicial">
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="NumeroFinal" class="form-label">Número Final</label>
+                <input asp-for="NumeroFinal" type="text" class="form-control" placeholder="Digite o número final">
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="Quantidade" class="form-label">Quantidade</label>
+                <input asp-for="Quantidade" type="text" class="form-control" placeholder="Digite a quantidade">
+            </div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Editar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (TempData["Success-Selo"] != null)
+{
+    <span id="notify" class="d-none" data-type="success">@TempData["Success-Selo"]</span>
+}
+
+@if (TempData["Error-Selo"] != null)
+{
+    <span id="notify" class="d-none" data-type="error">@TempData["Error-Selo"]</span>
+}
+
+@section Scripts{
+    <script src="~/js/Selo/Selo.js"></script>
+}

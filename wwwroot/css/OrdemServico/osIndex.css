@@ -1,0 +1,50 @@
+﻿#pesquisa {
+    padding:15px;
+}
+
+#botaoPesquisarOs{
+    margin-top:10px;
+}
+
+#novaOrdem-btn {
+    display: flex;
+    float: right;
+}
+
+#card-pesquisa {
+    margin-top: 35px;
+}
+
+#card-tabela {
+    margin-top: 50px;
+}
+
+#navegacao-div {
+    display: flex;
+    float: right;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top:10px;
+}
+
+#div-tabela {
+    margin: 25px;
+}
+
+#seta-esquerda{
+    display:flex;
+}
+
+#seta-direita{
+    float:right;
+}
+#paginacao{
+    margin-top:10px;
+}
+
+#tabela-Index > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(4) {
+    width: 90px;
+}
+
+

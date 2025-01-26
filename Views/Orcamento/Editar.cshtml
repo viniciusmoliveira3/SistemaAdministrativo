@@ -1,0 +1,259 @@
+﻿@using Colex.ViewModel;
+@using System.Text
+@using Newtonsoft.Json
+@model OrcamentoViewModels;
+
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Orcamento/Cadastrar.css" />
+}
+
+<h1>Editar orçamento</h1>
+<div id="container-orcamento">
+    <div class="card mt-50" id="card-tabela">
+        <div id="container-tabela">
+            <form id="formulario" class="row" asp-controller="Orcamento" asp-action="Editar" method="POST">
+                <div class="col-md-2">
+                    <label asp-for="DataCriacao" class="form-label">Data da abertura*</label>
+                    <input asp-for="DataCriacao" type="date" class="form-control" placeholder="dd/MM/AAAA">
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Comprador" class="form-label">Comprador*</label>
+                    <input asp-for="Comprador" type="text" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Telefone" class="form-label">Telefone</label>
+                    <input asp-for="Telefone" type="text" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Cliente" class="form-label">Cliente*</label>
+                    <input asp-for="Cliente" type="text" class="form-control">
+                </div>
+                <div class="col-sm-2">
+                    <label asp-for="Cep" class="form-label">Cep</label>
+                    <input asp-for="Cep" type="text" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Endereco" class="form-label">Endereço</label>
+                    <input asp-for="Endereco" type="text" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Cidade" class="form-label">Cidade</label>
+                    <input asp-for="Cidade" type="text" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Bairro" class="form-label">Bairro</label>
+                    <input asp-for="Bairro" type="text" class="form-control">
+                </div>
+                <div class="col-md-1">
+                    <label asp-for="Estado" class="form-label">UF</label>
+                    <input asp-for="Estado" type="text" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Cnpj" class="form-label">CNPJ</label>
+                    <input asp-for="Cnpj" type="text" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Cpf" class="form-label">CPF</label>
+                    <input asp-for="Cpf" type="text" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Email" class="form-label">E-mail</label>
+                    <input asp-for="Email" type="text" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Vendedor" class="form-label">Vendedor*</label>
+                    <input asp-for="Vendedor" type="text" class="form-control">
+                </div>
+                <div class="col-md-5">
+                    <label asp-for="Nota" class="form-label">Nota</label>
+                    <input asp-for="Nota" type="text" class="form-control">
+                </div>
+                <div class="col-md-5">
+                    <label asp-for="Observacao" class="form-label">Observação</label>
+                    <input asp-for="Observacao" type="text" class="form-control">
+                </div>
+                <div id="cabecalho-produto">
+                    <h3>Produtos</h3>
+                    <a id="novaOrdem-btn" class="btn btn-success" role="button">Adicionar produto</a>
+                    <button id="btnEnviarProduto" type="button" class="btn btn-success">Gerar orçamento</button>
+                </div>
+                <div>
+                    <table class="table table-hover" id="tabela-produto">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Materia-prima</th>
+                                <th>Quantidade</th>
+                                <th>Valor Unitário</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var index = 0;
+                            }
+                            @foreach(OrcamentoProdutoViewModels op in ViewBag.OrcamentoProduto)
+                            {
+                                StringBuilder str = new StringBuilder();
+                                str.Append("{IdOrcamentoProduto:" + op.IdOrcamentoProduto + ",");
+                                str.Append("IdOrcamento:" + op.IdOrcamento + ",");
+                                str.Append("Nome:'" + op.Nome + "',");
+                                if(op.MateriaPrima != null)
+                                    str.Append("IdMateriaPrima:" + op.IdMateriaPrima + ",");
+                                str.Append("Quantidade:" + op.Quantidade + ",");
+                                str.Append("ValorUnitario:" + op.ValorUnitario.ToString().Replace(',', '.') + ",");
+                                str.Append("ValorTotal:" + op.ValorTotal.ToString().Replace(',', '.') + "}");
+                                var json = JsonConvert.DeserializeObject(str.ToString());
+
+
+
+                                var idMateriaPrima = op.MateriaPrima == null ? 0 : op.IdMateriaPrima;
+                                var materiaPrima = "";
+                                materiaPrima = op.MateriaPrima != null ? op.MateriaPrima.Nome : "";
+                                <tr data-index ="@index">
+                                    <td>@op.Nome</td>
+                                    <td>@materiaPrima
+                                        <input type="hidden" name="OrcamentoProduto[@index].IdMateriaPrima" value="@idMateriaPrima" />
+                                        <input type="hidden" name="OrcamentoProduto[@index].IdOrcamentoProduto" value="@op.IdOrcamentoProduto" />
+                                        <input type="hidden" name="OrcamentoProduto[@index].Nome" value="@op.Nome" />
+                                        <input type="hidden" name="OrcamentoProduto[@index].Quantidade" value="@op.Quantidade" />
+                                        <input type="hidden" name="OrcamentoProduto[@index].ValorUnitario" value="@op.ValorUnitario" />
+                                        <input type="hidden" name="OrcamentoProduto[@index].ValorTotal" value="@op.ValorTotal" />
+                                        <input type="hidden" name="OrcamentoProduto[@index].IdOrcamento" value="@op.IdOrcamento" />
+
+                                    </td>
+                                    <td>@op.Quantidade</td>
+                                    <td>@op.ValorUnitario</td>
+                                    <td>@op.ValorTotal</td>
+                                    <td>
+                                        <i class="bi bi-arrow-counterclockwise" style="font-size:25px; color:black"></i>
+                                        <i class="bi bi-trash-fill" data-json="@json" style="font-size:25px; color:black"></i>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <input asp-for="IdOrcamento" type="hidden" />
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalProdutoAlterar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alterar produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dados-busca">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="NomeEditar" class="form-label">Produto</label>
+                            <input id="NomeEditar" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="IdMateriaPrimaEditar" class="form-label">Matéria-prima</label>
+                            <select id="IdMateriaPrimaEditar" class="form-select">
+                                <option value="0" selected>Matéria-prima</option>
+                                @foreach (MateriaPrimaViewModels materia in ViewBag.Materia)
+                                {
+                                    <option value="@materia.Id">@materia.Nome</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="QuantidadeEditar" class="form-label">Quantidade</label>
+                            <input id="QuantidadeEditar" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ValorUnitarioEditar" class="form-label">Valor unitário</label>
+                            <input id="ValorUnitarioEditar" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ValorTotalEditar" class="form-label">Valor total</label>
+                            <input id="ValorTotalEditar" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnAlterarProduto" type="button" class="btn btn-primary">Alterar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalProduto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dados-busca">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="Nome" class="form-label">Produto</label>
+                            <input id="Nome" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="IdMateriaPrima" class="form-label">Matéria-prima</label>
+                            <select id="IdMateriaPrima" class="form-select">
+                                <option value="0" selected>Matéria-prima</option>
+                                @foreach (MateriaPrimaViewModels materia in ViewBag.Materia)
+                                {
+                                    <option value="@materia.Id">@materia.Nome</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="Quantidade" class="form-label">Quantidade</label>
+                            <input id="Quantidade" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ValorUnitario" class="form-label">Valor unitário</label>
+                            <input id="ValorUnitario" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ValorTotal" class="form-label">Valor total</label>
+                            <input id="ValorTotal" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btAddProduto" type="button" class="btn btn-primary">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalExclusaoProduto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="fundoTituloModal" class="modal-header">
+                <h5 class="Excluir extintor" id="modalExcluirTitulo">Excluir produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente apagar esse produto?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button id="btnApagarProduto" type="button" class="btn btn-primary">Apagar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/Orcamento/Editar.js"></script>
+}

@@ -1,0 +1,51 @@
+﻿.relItensModal{
+    padding: 10px;
+}
+#container-tabela {
+    padding: 20px;
+}
+
+h4 {
+    margin-top: 8px;
+}
+
+button {
+    margin-top: 15px;
+}
+
+#Insp-ensaio {
+    display: flex;
+    align-items: flex-end;
+}
+
+#checkbox-insp {
+    margin-left: 30px;
+    margin-bottom: 6px;
+}
+
+i {
+    margin-left: 5px;
+}
+
+#fundoTituloModal {
+    background-color: red;
+}
+
+#cabecalho-botao {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+
+#container-os {
+    margin-top: 10px;
+}
+
+#checkbox-reaproveitado {
+    margin-top: 40px;
+}
+
+#tabela-relatorio > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(4) {
+    width: 90px;
+}

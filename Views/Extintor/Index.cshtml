@@ -1,0 +1,92 @@
+﻿@using Colex.ViewModel
+@model List<ExtintorViewModels>
+
+@section Styles{
+    <link rel="stylesheet" href="/css/Extintor/Index.css" />
+    }
+
+
+<div id="navegacao-div">
+    <a id="novocliente-btn" class="btn btn-success" href="/Extintor/Cadastrar" role="button">Novo Extintor</a>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Index</li>
+        </ol>
+    </nav>
+</div>
+<h1 class="m-20 fs-35">Cadastrar extintor</h1>
+<div class="card" id="card-pesquisa">
+    <h2>Pesquisar extintor</h2>
+
+    <div class="col-md-6">
+        <input id="inputPesquisaExtintor" type="text" class="form-control ml-15 mb-25 mt-15 fs-25 " placeholder="Digite o número" >
+    </div>
+
+
+</div>
+
+
+<button id="btnPesquisarExtintor" class="btn btn-primary" type="submit">Pesquisar</button>
+
+
+
+<div class="card mt-50" id="card-tabela">
+    <div class="card-block pt-2 pb-2 m-25" id="div-tabela">
+        <table id="tabela-Index" class="table table-hover" data-totalPagina="@ViewBag.TotalPagina">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nº Extintor</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Carga</th>
+                    <th scope="col">Capacidade (Kg/L)</th>
+                    <th scope="col">Próximo Ensaio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ExtintorViewModels extintor in ViewBag.ListaExtintores)
+                {
+                    <tr>
+                        <td>@extintor.Id</td>
+                        <td>@extintor.NumeroCilindro</td>
+                        <td>@extintor.MarcaExtintor.Nome</td>
+                        <td>@extintor.MateriaPrima.Nome</td>
+                        <td>@extintor.Capacidade.CapacidadeCarga</td>
+                        <td>@extintor.ProximoEnsaioHisdrostatico</td>
+                        <td>
+                            <a href="/extintor/detalhe?id=@extintor.Id">
+                                <i class="bi bi-info-square-fill" style="font-size:23px; color:black" data-toggle="tooltip" data-placement="top" title="Detalhe do extintor"></i>
+                            </a>
+                            <a href="/extintor/editar?id=@extintor.Id">
+                                <i class="bi bi-gear-fill" style="font-size:23px; color:black" data-toggle="tooltip" data-placement="top" title="Alterar extintor"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+        <div id="paginacao">
+
+            <a>
+                <i id="seta-esquerda" class="fa-solid fa-arrow-left-long fa-lg"></i>
+            </a>
+            <a>
+                <i id="seta-direita" class="fa-solid fa-arrow-right-long fa-lg"></i>
+            </a>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="~/js/Extintor/IndexExtintor.js"></script>
+}

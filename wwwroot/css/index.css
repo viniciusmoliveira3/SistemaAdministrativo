@@ -1,0 +1,82 @@
+/* Estilo para o menu */
+
+body {
+    background-image: url("C:\Users\vinic\OneDrive\Área de Trabalho\vinicius\programaçãoimagemfundosistema")
+}
+.menu {
+    font-size:25px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    background-color: #acacac;
+    
+   
+    
+}
+
+/* Estilo para os itens do menu */
+.menu li {
+    margin-right: 20px;
+    
+}
+
+/* Estilo para os links do menu */
+.menu li a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo para o item do menu dropdown */
+.dropdown {
+    position: relative;
+}
+
+/* Estilo para a lista de subitens */
+.submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 170px;
+    background-color: #b2aeae;
+    display: none;
+    
+}
+
+ /* Estilo para os subitens do dropdown */
+.submenu li {
+     margin: 20px 0;
+}
+
+/* Estilo para os links dos subitens */
+.submenu li a {
+    color: black;
+    text-decoration: none;
+}
+
+/* Estilo para exibir a lista do dropdown quando o mouse estiver sobre o item do menu */
+.dropdown:hover .submenu {
+    display: block;
+}
+
+/*list-style: none;: remove o estilo padrão de lista, que inclui marcadores (bullets) antes dos itens.
+display: flex;: define a exibição do elemento como flexível, permitindo que os itens sejam alinhados horizontalmente e espaçados uniformemente.
+justify-content: space-between;: alinha os itens do menu horizontalmente e distribui o espaço disponível entre eles de forma equilibrada, deixando o espaço entre os itens.
+align-items: center;: alinha verticalmente os itens do menu no centro do elemento pai.
+padding: 10px;: adiciona uma margem interna (espaço interno) de 10 pixels ao redor do menu.
+background-color: #333;: define a cor de fundo do menu como cinza escuro (#333).
+margin-right: 20px;: adiciona uma margem à direita de 20 pixels aos itens do menu, exceto o último, para separá-los.
+color: #fff;: define a cor do texto dos links do menu como branco (#fff).
+text-decoration: none;: remove a decoração de sublinhado padrão dos links do menu.
+position: relative;: define o item do menu dropdown como um elemento posicionado relativo ao seu elemento pai (o menu).
+position: absolute;: define a lista de subitens como um elemento posicionado absolutamente em relação ao item do menu dropdown.
+top: 100%;: posiciona a lista de subitens logo abaixo do item do menu dropdown.
+left: 0;: alinha a lista de subitens à esquerda do elemento pai.
+width: 100%;: define a largura da lista de subitens como a largura total do elemento pai.
+display: none;: oculta a lista de subitens por padrão.
+background-color: #333;: define a cor de fundo da lista de subitens como cinza escuro (#333).
+margin: 10px 0;: adiciona uma margem de 10 pixels acima e abaixo de cada subitem para separá-los.
+:hover: pseudoclasse que define o estilo do elemento quando o mouse está sobre ele.
+.dropdown:hover .submenu: define que a lista de subitens deve ser exibida quando o mouse estiver sobre o item do menu dropdown.*/

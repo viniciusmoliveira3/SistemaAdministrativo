@@ -1,0 +1,123 @@
+﻿@using Colex.ViewModel;
+@model ExtintorViewModels
+
+
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Extintor/Extintor.css" />
+}
+
+<div id="navegacao-div">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item"><a href="~/Extintor/Index">Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+    </nav>
+</div>
+<h1>Editar extintor</h1>
+<div class="card mt-50" id="card-tabela">
+    <div id="container-tabela">
+        <form class="row" asp-controller="Extintor" asp-action="Editar" method="post">
+
+            <div class="col-md-2">
+                <label asp-for="NumeroCilindro" class="form-label">Nº Cilindro</label>
+                <input asp-for="NumeroCilindro" type="text" class="form-control" placeholder="Digite o número do cilindro">
+            </div>
+            <div class="col-md-2">
+                <label asp-for="AnoFabricacao" class="form-label">Ano de fabricação</label>
+                <input asp-for="AnoFabricacao" type="text" class="form-control" placeholder="Digite o ano de fabricação">
+            </div>
+            <div class="col-md-2">
+                <label asp-for="IdMarcaExtintor" class="form-label">Marca do Extintor</label>
+                <select asp-for="IdMarcaExtintor" class="form-select">
+                    <option selected>Marca</option>
+                    @foreach (MarcaExtintorViewModels marca in ViewBag.MarcaExtintor)
+                    {
+                        <option value="@marca.Id">@marca.Nome</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="EnsaioHidrostatico" class="form-label">Ensaio Hidrostatico</label>
+                <input asp-for="EnsaioHidrostatico" type="text" class="form-control" placeholder="Digite o ensaio hidrostatico">
+            </div>
+            <div class="col-md-2">
+                <label asp-for="ProximoEnsaioHisdrostatico" class="form-label">Proximo Ensaio</label>
+                <input asp-for="ProximoEnsaioHisdrostatico" type="text" class="form-control" placeholder="Digite o próximo ensaio hidrostatico">
+            </div>
+            <div class="col-md-2">
+                <label asp-for="NBR" class="form-label">NBR</label>
+                <input asp-for="NBR" type="text" class="form-control" placeholder="Digite a NBR/EB">
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="Projeto" class="form-label">Projeto</label>
+                <input asp-for="Projeto" type="text" class="form-control" placeholder="Digite o projeto">
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="IdMateriaPrima" class="form-label">Matério-prima</label>
+                <select asp-for="IdMateriaPrima" class="form-select">
+                    <option selected>Carga</option>
+                    @foreach (MateriaPrimaViewModels materia in ViewBag.MateriaPrima)
+                    {
+                        <option value="@materia.Id">@materia.Nome</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="NumPatrimonio" class="form-label">Nº do patrimônio.</label>
+                <input asp-for="NumPatrimonio" type="text" class="form-control" placeholder="Digite o nº do patrimônio">
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CapacExtintora" class="form-label">Capacidade extintora</label>
+                <input asp-for="CapacExtintora" type="text" class="form-control" placeholder="Digite a cap. extintora">
+            </div>
+            <div class="col-md-2">
+                <label asp-for="IdCapacidade" class="form-label">Capacidade</label>
+                <select asp-for="IdCapacidade" class="form-select">
+                    <option selected>KG/L</option>
+                    @foreach (CapacidadeViewModels capacidade in ViewBag.Capacidade)
+                    {
+                        <option value="@capacidade.Id">@capacidade.CapacidadeCarga</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Lote" class="form-label">Lote</label>
+                <input asp-for="Lote" type="text" class="form-control" placeholder="00/00">
+            </div>
+            <div class="col-md-3">
+                <label asp-for="SeloAnterior" class="form-label">Selo anterior</label>
+                <input asp-for="SeloAnterior" type="text" class="form-control" placeholder="Selo anterior">
+            </div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="col-12">
+                <button id="botaoEditar" type="submit" class="btn btn-primary">Editar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (TempData["Success-Extintor"] != null)
+{
+    <span id="notify" class="d-none" data-type="success">@TempData["Success-Extintor"]</span>
+}
+
+@if (TempData["Error-Extintor"] != null)
+{
+    <span id="notify" class="d-none" data-type="error">@TempData["Error-Extintor"]</span>
+}
+
+@section Scripts{
+    <script src="~/js/Extintor/Editar.js"></script>
+}

@@ -1,0 +1,3 @@
+#!/bin/bash
+dotnet tool install --global dotnet-ef --version 7.0.2
+dotnet ef database update --connection "Host=localhost;Port=5432;Pooling=true;Database=ColexSistema;User Id=postgres;Password=${POSTGRES_PASSWORD};"

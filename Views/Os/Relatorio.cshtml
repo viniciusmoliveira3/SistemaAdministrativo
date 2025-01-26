@@ -1,0 +1,271 @@
+﻿@using Colex.ViewModel;
+@model OsViewModels;
+
+
+@section Styles {
+    <link rel="stylesheet" href="/css/OrdemServico/Relatorio.css" />
+}
+
+
+<div id="printable">
+    <input id="loteAtualBc" type="hidden" value="@Model.LoteAtualBc" />
+    <input id="loteAtualAbc" type="hidden" value="@Model.LoteAtualAbc" />
+    <input id="loteAtualCo2" type="hidden" value="@Model.LoteAtualCo2" />
+    <input id="loteAtualEm" type="hidden" value="@Model.LoteAtualEm" />
+    <table class="tg">
+        <thead>
+            <tr>
+                <th class="tg2lax" colspan="2" rowspan="2"><img id="logo" src="/Img/colexLogo.jpg" /> </th>
+                <th class="tg-rvyq" colspan="14"><span style="font-weight:bold;font-style:italic">J.G Rio Preto Com.Serviço LTDA-ME - 24.540.851/0001-95 | Rua Dr. José Jorge Cury - 370, São José do Rio Preto - 15076-610</span></th>
+                <th class="tg-c3ow" colspan="16"><span style="font-weight:bold">Relatório de Inspeção e Manutenção de 1º, 2º e 3º Níveis</span></th>
+                <th class="tg-c3ow tecResponsavel" colspan="4"><span style="font-weight:bold">Téc.Responsavel:</span></th>
+                <th class="tg-c3ow" colspan="4"><span>INMETRO: <span style="font-weight:bold; text-decoration:underline">REG. 0001823/2018</span></span></th>
+            </tr>
+            <tr>
+                <th class="tg-0lax cabecalho" colspan="2">Relatório: @Model.IdOServico </th>
+                <th class="tg-0lax cabecalho" colspan="2">Ord. de serv.: @Model.NumeroOrdemServico</th>
+                <th id="nomeCliente" class="tg-0lax cabecalho" colspan="6">Cliente: <span id="clienteNome">@Model.Cliente.NomeFantasia</span></th>
+                <th class="tg-0lax cabecalho" colspan="9">Endereço: @Model.Cliente.EnderecoSocial</th>
+                <th class="tg-0lax cabecalho" colspan="7">Bairro: @Model.Cliente.Bairro</th>
+                <th class="tg-0lax cabecalho" colspan="4">Cidade: @Model.Cliente.Cidade</th>
+                <th class="tg-0lax cabecalho" colspan="5">Representante: @Model.Representante.NomeFantasia</th>
+                <th class="tg-0lax cabecalho" colspan="3">Data: @Model.DataAbertura.ToString("dd/MM/yyyy")</th>
+            </tr>
+            <tr>
+                <td class="tg-baqh" colspan="12"><span style="font-weight:bold;font-style:italic">Dados do extintor</span></td>
+                <td class="tg-baqh" colspan="10"><span style="font-weight:bold;font-style:italic">Inspeção/Ensaios</span></td>
+                <td class="tg-baqh" colspan="18"><span style="font-weight:bold;font-style:italic">Ensaio Pneumático e hidrostático</span></td>
+            </tr>
+            <tr>
+                <td class="tg-baqh">Item</td>
+                <td class="tg-baqh">Num<br>Cilindro</td>
+                <td class="tg-baqh">Ano<br>Fabri.</td>
+                <td class="tg-baqh">Últ<br>Ensai. Hidros.</td>
+                <td class="tg-baqh">Fabric.</td>
+                <td class="tg-baqh">Tipo<br>Carga(Kg/L)</td>
+                <td class="tg-baqh">Carga<br>Nominal</td>
+                <td class="tg-baqh">Projeto<br></td>
+                <td class="tg-baqh">Nbr</td>
+                <td class="tg-baqh">Selo<br>Anterior</td>
+                <td class="tg-baqh">Cap.<br>Extintiora</td>
+                <td class="tg-baqh">Lote</td>
+                <td class="tg-baqh">Nvl<br>Manute.</td>
+                <td class="tg-baqh">Ind<br>Pressão</td>
+                <td class="tg-baqh">Ens.Vaz<br>Val</td>
+                <td class="tg-baqh">Vizual<br>Interno</td>
+                <td class="tg-baqh">Insp.<br>Rosca</td>
+                <td class="tg-baqh">Pintura</td>
+                <td class="tg-baqh" colspan="4">Peças</td>
+                <td class="tg-baqh">Cilin.<br>Vazio<br />(kg)</td>
+                <td class="tg-baqh">Cilin.<br>c/ água<br />(kg)</td>
+                <td class="tg-baqh">Vol.<br />Litros</td>
+                <td class="tg-baqh">Máx.<br>Carga<br />(kg)</td>
+                <td class="tg-baqh">Pressão<br>Trabalho<br />(kg)</td>
+                <td class="tg-baqh">Pressão<br>Ens. Cil</td>
+                <td class="tg-baqh">Pressão<br>Ens. Mang<br />(kg)<br></td>
+                <td class="tg-baqh">Pressão<br>Ens. Man<br />(kg)</td>
+                <td class="tg-baqh">Pressão<br>Ens. Vál<br />(kg)</td>
+                <td class="tg-baqh">Def. Inst<br />(%)</td>
+                <td class="tg-baqh">Def.<br />Perma<br />(%)</td>
+                <td class="tg-baqh">Porc.<br>EP/ET<br />(%)</td>
+                <td class="tg-baqh">Tara<br>Gravada</td>
+                <td class="tg-baqh">Tara<br>Real<br />(kg)</td>
+                <td class="tg-baqh">Perda/<br>Massa<br />(%)</td>
+                <td class="tg-baqh">Motivo<br>Reprova</td>
+                <td class="tg-baqh">Laudo<br>A/R</td>
+                <td class="tg-baqh">Num<br>Selo</td>
+            </tr>
+        </thead>
+        <tbody id="tabelaPrincipal">
+            @{
+                int i = 1;
+            }
+            @foreach (Colex.ViewModel.RelatorioItensViewModels relatorio in ViewBag.RelatorioItens)
+            {
+                <tr>
+                    <td class="tg-0lax">@i</td>
+                    <td class="tg-0lax">@relatorio.Extintor.NumeroCilindro </td>
+                    <td class="tg-0lax">@relatorio.Extintor.AnoFabricacao </td>
+                    <td class="tg-0lax">@relatorio.Extintor.EnsaioHidrostatico </td>
+                    <td class="tg-0lax">@relatorio.Extintor.MarcaExtintor.Nome </td>
+                    <td class="tg-0lax">@relatorio.Extintor.MateriaPrima.Nome </td>
+                    @if (@relatorio.Extintor.MateriaPrima.Nome.ToLower() == "água" || @relatorio.Extintor.MateriaPrima.Nome.ToLower() == "agua")
+                    {
+                        <td class="tg-0lax">@relatorio.Extintor.Capacidade.CapacidadeCarga L. </td>
+
+                    }
+                    else
+                    {
+                        <td class="tg-0lax">@relatorio.Extintor.Capacidade.CapacidadeCarga Kg </td>
+
+                    }
+                    <td class="tg-0lax">@relatorio.Extintor.Projeto </td>
+                    <td class="tg-0lax">@relatorio.Extintor.NBR</td>
+                    <td class="tg-0lax">@relatorio.Extintor.SeloAnterior</td>
+                    <td class="tg-0lax">@relatorio.Extintor.CapacExtintora</td>
+                    <td class="tg-0lax">@relatorio.Extintor.Lote</td>
+                    <td class="tg-0lax">@relatorio.NivelManutencao</td>
+                    <td class="tg-0lax" id="valorEnsaioInd"> @relatorio.EnsaioIndPre</td>
+                    <td class="tg-0lax" id="valorEnsaioVaz">@relatorio.EnsaioVazVal</td>
+                    <td class="tg-0lax" id="valorVizu">@relatorio.VisualIntacto</td>
+                    <td class="tg-0lax" id="valorInspRosca">@relatorio.InspRosca</td>
+                    <td class="tg-0lax" id="valorPintura">@relatorio.Pintura</td>
+                    @if (relatorio.Componente1 == null)
+                    {
+                        <td class="tg-0lax">-</td>
+                    }
+                    else
+                    {
+                        <td class="tg-0lax">@relatorio.Componente1.Id</td>
+                    }
+                    @if (relatorio.Componente2 == null)
+                    {
+                        <td class="tg-0lax">-</td>
+                    }
+                    else
+                    {
+                        <td class="tg-0lax">@relatorio.Componente2.Id</td>
+                    }
+                    @if (relatorio.Componente3 == null)
+                    {
+                        <td class="tg-0lax">-</td>
+                    }
+                    else
+                    {
+                        <td class="tg-0lax">@relatorio.Componente3.Id</td>
+                    }
+                    @if (relatorio.Componente4 == null)
+                    {
+                        <td class="tg-0lax">-</td>
+                    }
+                    else
+                    {
+                        <td class="tg-0lax">@relatorio.Componente4.Id</td>
+                    }
+                    <td class="tg-0lax">@relatorio.PesoCilindroVazio</td>
+                    <td class="tg-0lax">@relatorio.PesoComAgua</td>
+                    <td class="tg-0lax">@relatorio.VolumeLitros</td>
+                    <td class="tg-0lax">@relatorio.CapacidadeMaxima</td>
+                    <td class="tg-0lax">@relatorio.PressaoTrabalho</td>
+                    <td class="tg-0lax">@relatorio.PressaoTesteCilindro</td>
+                    <td class="tg-0lax">@relatorio.PressaoTesteMangueira</td>
+                    <td class="tg-0lax">@relatorio.PressaoTesteManometro</td>
+                    <td class="tg-0lax">@relatorio.PressaoTesteValvula</td>
+                    <td class="tg-0lax">@relatorio.DefInstantanea</td>
+                    <td class="tg-0lax">@relatorio.DefPermanente</td>
+                    <td class="tg-0lax">@relatorio.PorcEpEt</td>
+                    <td class="tg-0lax">@relatorio.TaraGravada</td>
+                    <td class="tg-0lax">@relatorio.TaraReal</td>
+                    <td class="tg-0lax">@relatorio.PerdaMassa</td>
+                    <td class="tg-0lax">@relatorio.MotivoRepro</td>
+                    <td class="tg-0lax">@relatorio.LaudoAR</td>
+                    <td class="tg-0lax">@relatorio.NumSelo</td>
+                    <td class="reaproveitado">@relatorio.Reaproveitado</td>
+                </tr>
+                i++;
+
+            }
+        </tbody>
+    </table>
+    <br />
+    <div id="tabelasAdicionais">
+         <table class="tg">
+            <tr>
+                <th class="tg-1wig tabelaAdicional">Componente</th>
+            </tr>
+            <tr>
+                <td class="tg-0lax tabelaAdicional">1.Ind.Pressão:<br /> @Model.LoteIndPressao </td>
+                <td class="tg-0lax tabelaAdicional">2.Mang. pó: <br />@Model.LoteMangueirapo</td>
+                <td class="tg-0lax tabelaAdicional">3.Mang. co2:<br />@Model.LoteMangueiraco2 </td>
+                <td class="tg-0lax tabelaAdicional">4.Vál. baixa:<br /> @Model.LoteValvulaBaixa</td>
+                <td class="tg-0lax tabelaAdicional">5.Vál. alta:<br />@Model.LoteValvulaAlta</td>
+                <td class="tg-0lax tabelaAdicional">6.Conj. Segurança:<br /> @Model.LoteConjSegurança </td>
+            </tr>
+        </table>
+        <table class="tg reprovas">
+            <tr>
+                <th class="tg-1wig">Legenda de reprovas</th>
+            </tr>
+            <tr>
+                <td class="tg-0lax">1.Deforma acima <br />da tolerância</td>
+                <td class="tg-0lax">2.Deformação<br /> visual</td>
+                <td class="tg-0lax">3.Rosca folgada <br />ou danificada</td>
+                <td class="tg-0lax">4.Cilindro<br /> furado</td>
+                <td class="tg-0lax">5.Normas/Ano/<br />Fab.inexistente</td>
+                <td class="tg-0lax">6.Outros</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div id="div-lote">
+       @*  <table id="lote" class="tg">
+            <tr>
+                <td class="tg-0lax"><span style="font-weight:bold">Lote atual Bc: @Model.LoteAtualBc</span></td>
+                <td class="tg-0lax"><span style="font-weight:bold">Lote atual Abc: @Model.LoteAtualAbc</span></td>
+                <td class="tg-0lax"><span style="font-weight:bold">Qtd. Lote atual Bc</span></td>
+                <td class="tg-0lax" id="somaLoteBc"></td>
+                <td class="tg-0lax"><span style="font-weight:bold">Qtd. Lote atual Abc</span></td>
+                <td class="tg-0lax" id="somaLoteAbc"></td>
+                <td class="tg-0lax"><span style="font-weight:bold">Reaproveitado Abc</span></td>
+                <td class="tg-0lax" id="somaReaproveitadoAbc"></td>
+                <td class="tg-0lax"><span style="font-weight:bold">Reaproveitadoa Bc</span></td>
+                <td class="tg-0lax" id="somaReaproveitadoBc"></td>
+                <td class="tg-0lax"><span style="font-weight:bold">Reaproveitado Co2</span></td>
+                <td class="tg-0lax" id="somaReaproveitadoCo2"></td>
+            </tr>
+        </table> *@
+        <div class="div-lote-filho"> 
+            <table id="lote" class="tg">
+                <tr>
+                    <td class="tg-0lax"><span style="font-weight:bold">Lote Bc: @Model.LoteAtualBc</span></td>
+                    <td class="tg-0lax"><span style="font-weight:bold">Qtd. Bc</span></td>
+                    <td class="tg-0lax" id="somaLoteBc"></td>
+                    <td class="tg-0lax"><span style="font-weight:bold">Reap. Bc</span></td>
+                    <td class="tg-0lax" id="somaReaproveitadoBc"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="div-lote-filho">
+            <table id="lote" class="tg">
+                <tr>
+                    <td class="tg-0lax"><span style="font-weight:bold">Lote Abc: @Model.LoteAtualAbc</span></td>
+                    <td class="tg-0lax"><span style="font-weight:bold">Qtd. Abc</span></td>
+                    <td class="tg-0lax" id="somaLoteAbc"></td>
+                    <td class="tg-0lax"><span style="font-weight:bold">Reap. Abc</span></td>
+                    <td class="tg-0lax" id="somaReaproveitadoAbc"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="div-lote-filho">
+            <table id="lote" class="tg">
+                <tr>
+                    <td class="tg-0lax"><span style="font-weight:bold">Lote CO2: @Model.LoteAtualCo2</span></td>
+                    <td class="tg-0lax"><span style="font-weight:bold">Qtd. CO2</span></td>
+                    <td class="tg-0lax" id="somaLoteCo2"></td>
+                    <td class="tg-0lax"><span style="font-weight:bold">Reap. Co2</span></td>
+                    <td class="tg-0lax" id="somaReaproveitadoCo2"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="div-lote-filho">
+
+            <table id="lote" class="tg">
+                <tr>
+                    <td class="tg-0lax"><span style="font-weight:bold">Lote EM: @Model.LoteAtualEm</span></td>
+                    <td class="tg-0lax"><span style="font-weight:bold">Qtd.EM</span></td>
+                    <td class="tg-0lax" id="somaLoteEm"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <br />
+    <div data-html2canvas-ignore="true" id="botoesRelatorio" class="d-grid gap-3 d-md-block">
+        <a id="botaoVoltar" class="btn btn-primary" href="~/Os/Cadastrar" role="button">Voltar</a>
+        <button id="botaoSalvar" class="btn btn-primary">Salvar</button>
+        <button id="btnImprimir" class="btn btn-primary">Imprimir</button>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/Os/Relatorio.js"></script>
+}

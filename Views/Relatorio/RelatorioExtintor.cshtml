@@ -1,0 +1,74 @@
+﻿@using Colex.ViewModel;
+@model List<RelatorioItensViewModels>
+
+
+<link rel="stylesheet" href="~/css/Relatorios/RelatorioExtintor.css" />
+
+@{
+    string numeroExtintor = "";
+    foreach (var numero in Model)
+    {
+        numeroExtintor = numero.Extintor.NumeroCilindro;
+        break;
+    }
+}
+
+<table class="tg">
+    <thead>
+        @* <tr>
+        <th class="tg-0lax" colspan="2"><img id="logo" src="/Img/logoSemfundo.png"/></th>
+        <th class="tg-0lax" colspan="8"></th>
+        <tr> *@
+        <tr>
+            <td id="nomeRel" class="tg-0lax" colspan="10"><span style="font-weight:600; font-size:large !important">Relatório de extintores</span></td>
+        </tr>
+        <tr>
+            <td id="numeroExtintor" class="tg-0lax" colspan="5">Nº do extintor: @numeroExtintor   </td>
+            <td class="tg-0lax" colspan="5">Data da emissão: @DateTime.Now.ToString("dd/MM/yyyy") </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">Item</td>
+            <td class="tg-0lax">Nº do ext.</td>
+            <td class="tg-0lax">Ano fabri.</td>
+            <td class="tg-0lax">Fabric.</td>
+            <td class="tg-0lax">Últ. teste</td>
+            <td class="tg-0lax">Mat. prima</td>
+            <td class="tg-0lax">Lote int.</td>
+            <td class="tg-0lax">Nvl. manut</td>
+            <td class="tg-0lax">Data manut.</td>
+            <td class="tg-0lax">Selo</td>
+        </tr>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+        }
+        @foreach (Colex.ViewModel.RelatorioItensViewModels extintor in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@extintor.Extintor.NumeroCilindro</td>
+                <td>@extintor.Extintor.AnoFabricacao</td>
+                <td>@extintor.Extintor.MarcaExtintor.Nome</td>
+                <td>@extintor.Extintor.EnsaioHidrostatico</td>
+                <td>@extintor.Extintor.MateriaPrima.Nome</td>
+                <td>@extintor.Extintor.Lote</td>
+                <td>@extintor.NivelManutencao</td>
+                <td>@extintor.Os.DataAbertura.ToString("dd/MM/yyyy")</td>
+                <td>@extintor.NumSelo</td>
+            </tr>
+            i++;
+        }
+
+    </tbody>
+</table>
+<br />
+<div data-html2canvas-ignore="true" id="botoesOrcamento" class="d-grid gap-3 d-md-block">
+    <button id="botaoSalvar" class="btn btn-primary">Salvar</button>
+    <button id="btnImprimir" class="btn btn-primary">Imprimir</button>
+</div>
+
+@section scripts {
+    <script src="/js/Relatorio/RelatorioExtintor.js"></script>
+}    

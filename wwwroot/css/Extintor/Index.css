@@ -1,0 +1,56 @@
+﻿h1 {
+    margin: 20px;
+    font-size: 35px;
+}
+
+h2 {
+    font-size: 25px;
+    margin: 10px;
+}
+
+#card-tabela {
+    margin-top: 50px;
+}
+
+input {
+    margin-left: 15px;
+    margin-bottom: 25px;
+    margin-top: 15px;
+}
+
+#div-tabela {
+    margin: 25px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+#novocliente-btn {
+    display: flex;
+    float: right;
+}
+
+#navegacao-div {
+    display: flex;
+    float: right;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center
+}
+
+#card-pesquisa {
+    margin-top: 35px;
+}
+
+#seta-esquerda {
+    display: flex;
+}
+
+#seta-direita {
+    float: right;
+}
+
+#paginacao {
+    margin-top: 10px;
+}

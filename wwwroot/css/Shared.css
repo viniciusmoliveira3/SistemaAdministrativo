@@ -1,0 +1,11 @@
+﻿.ui-autocomplete {
+    z-index: 1070 !important;
+}
+.ui-front{
+    z-index: 1070 !important;
+}
+
+#logo {
+    display: flex;
+    justify-content: center;
+}

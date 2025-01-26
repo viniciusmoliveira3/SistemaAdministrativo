@@ -1,0 +1,77 @@
+﻿@using Colex.ViewModel;
+@model ComponenteViewModels;
+
+
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Componente/Componente.css" />
+}
+
+<div id="navegacao-div">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item"><a href="~/Componente/Index">Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalhe</li>
+        </ol>
+    </nav>
+</div>
+
+<h1>Detalhe componentes</h1>
+<div class="card mt-50" id="card-tabela">
+    <div id="container-tabela">
+        <form class="row" asp-controller="Componente" asp-action="Detalhe" method="get">
+            <div class="col-md-2">
+                <label asp-for="Lote" class="form-label">Lote interno</label>
+                <input asp-for="Lote" type="text" class="form-control" placeholder="Digite o lote do componente" disabled>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Nome" class="form-label">Nome do componente</label>
+                <input asp-for="Nome" type="text" class="form-control" placeholder="Digite o nome do componente" disabled>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Data" class="form-label">Data</label>
+                <input asp-for="Data" type="date" class="form-control" placeholder="DD/MM/AA" disabled>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Quantidade" class="form-label">Quantidade</label>
+                <input asp-for="Quantidade" type="text" class="form-control" placeholder="Digite a quantidade(Kg/L)" disabled>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="QuantidadeAtual" class="form-label">Quantidade Atual</label>
+                <input asp-for="QuantidadeAtual" type="text" class="form-control" placeholder="Digite a quantidade(Kg/L)" disabled>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="IdFornecedor" class="form-label">Fornecedor</label>
+                <select asp-for="IdFornecedor" class="form-select" disabled>
+                    <option selected>Fornecedor</option>
+                    @foreach (FornecedorViewModels fornecedor in ViewBag.Fornecedor)
+                    {
+                        <option value="@fornecedor.Id">@fornecedor.NomeFantasia</option>
+                    }
+
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Certificado" class="form-label">Certificado</label>
+                <input asp-for="Certificado" type="text" class="form-control" placeholder="Digite o certificado" disabled>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="NF" class="form-label">Nota Fiscal</label>
+                <input asp-for="NF" type="text" class="form-control" placeholder="Digite a NF" disabled>
+            </div>
+            <div id="checkboxAtivo" class="col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" asp-for="Ativo" type="checkbox" disabled>
+                    <label class="form-check-label" asp-for="Ativo">Lote ativo</label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

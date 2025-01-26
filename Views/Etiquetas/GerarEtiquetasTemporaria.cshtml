@@ -1,0 +1,41 @@
+﻿@using Colex.ViewModel.Auxiliares;
+@model EtiquetaTemporariaViewModel;
+
+<link rel="stylesheet" href="~/css/Etiquetas/EtiquetaTemporaria.css" />
+
+<div id="printable">
+    <div data-html2canvas-ignore="true" id="botaoEtiquetas" class="d-grid gap-3 d-md-block">
+        <a id="botaoVoltar" class="btn btn-primary" href="~/Home/Index" role="button">Voltar</a>
+        <button id="btnImprimir" class="btn btn-primary">Imprimir</button>
+    </div>
+    <br />
+    @for (var i = 0; i < Model.Qtd; i++ )
+    {
+        <table class="tg">
+            <thead>
+                <tr>
+                    <th class="tg-0pky" colspan="4" rowspan="2"><span id="cabecalho" style="font-weight:bold"><img id="logo" src="~/Img/capturalogo-removebg-preview.png" /> COLEX EXTINTORES<br>J.G Rio Preto Comércio e Serviço Ltda-ME<br>R.Dr José Jorge Cury, 370 - S.J do Rio Preto - SP<br>CNPJ: 24.540.851/0001-95<br>Tel:(17)3238-3811/(17)3513-6400</span></th>
+                </tr>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tg-0pky"><span id="dataTop" style="font-weight:bold">Próx. Manut. 2º nível:</span><br /><span style="font-weight:bold" id="datas">@Model.Mes.ToUpper() - @Model.AnoProximaManu</span></td>
+                    <td class="tg-0pky"><span id="dataTop" style="font-weight:bold">Próx Manut 3º nível:</span><br /><span style="font-weight:bold" id="datas">@Model.Ano</span></td>
+                    <td class="tg-0pky"><span id="dataTop" style="font-weight:bold">Manute. Realizada:</span><br /><span style="font-weight:bold" id="datas">NIVEL: @Model.Manutencao</span></td>
+                    <td class="tg-0pky"><span id="dataTop" style="font-weight:bold">Matéria Prima: </span><br /><span style="font-weight:bold" id="datas">@Model.NomeMateria.ToUpper()</span></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><span id="descricao" style="font-weight:bold">Garantia valida por 1 ano. A inspeção mensal dever ser feita pelo <br />  proprietário.  Suspensão de garantia: - Violação do lacre selo Inmetro, <br /> anel, uso inadequado, e danos ao equipamento</span></td>
+
+                </tr>
+               
+            </tbody>
+        </table>
+        <br />
+    }
+</div>
+<script src="~/QrCode/qrcode.min.js"></script>
+
+<script src="~/js/Etiquetas/Etiquetas.js"></script>

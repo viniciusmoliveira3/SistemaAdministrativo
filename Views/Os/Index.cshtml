@@ -1,0 +1,87 @@
+﻿@using Colex.ViewModel
+@model List<OsViewModels>
+
+@section Styles{
+    <link rel="stylesheet" href="/css/OrdemServico/osIndex.css" />
+    }
+
+
+<div id="navegacao-div">
+    <a id="novaOrdem-btn" class="btn btn-success" href="/Os/Cadastrar" role="button">Nova ordem de serviço</a>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Index</li>
+        </ol>
+    </nav>
+</div>
+<h1 class="m-20 fs-35">Ordens de serviço</h1>
+<div class="card" id="card-pesquisa">
+    <div id="pesquisa" class="row">
+        <h2>Pesquisar ordens de serviço </h2>
+
+        <div class="col-md-6">
+            <input id="inputPesquisa" type="text" class="form-control ml-15 mb-25 mt-15 fs-25 " placeholder="Digite o nome do cliente" aria-label="Digite o nome">
+        </div>
+        <div class="col-md-6">
+            <input id="inputPesquisaNumero" type="text" class="form-control ml-15 mb-25 mt-15 fs-25 " placeholder="Digite o número da Os" aria-label="Digite o número">
+        </div>
+
+    </div>
+</div>
+
+
+<button id="botaoPesquisarOs" class="btn btn-primary" type="button">Pesquisar</button>
+
+
+
+<div  class="card mt-50" id="card-tabela">
+    <div class="card-block pt-2 pb-2 m-25" id="div-tabela">
+        <table id="tabela-Index" class="table table-hover" data-totalPagina="@ViewBag.TotalPagina">
+            <thead>
+                <tr>
+                    <th scope="col">Nº da OS</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Data da abertura</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (OsViewModels os in ViewBag.Os)
+                {
+                    <tr>
+                        <td>@os.NumeroOrdemServico</td>
+                        <td>@os.Cliente.NomeFantasia</td>
+                        <td>@os.DataAbertura.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a href="/os/Relatorio?IdOs=@os.IdOServico">
+                                <i class= "bi bi-file-earmark-spreadsheet-fill" style="font-size:23px; color:black"  data-toggle="tooltip" data-placement="top" title="Detalhe da Os"></i>
+                            </a>
+                            <a href="/os/Editar?IdOs=@os.IdOServico">
+                                    <i class= "bi bi-gear-fill" style="font-size:23px; color:black" data-toggle="tooltip" data-placement="top" title="Alterar os"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="paginacao">
+
+            <a>
+                <i id="seta-esquerda" class="fa-solid fa-arrow-left-long fa-lg"></i>
+            </a>
+            <a>
+                <i id="seta-direita" class="fa-solid fa-arrow-right-long fa-lg"></i>
+            </a>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/Os/OrdemServicoIndex.js"></script>
+
+}

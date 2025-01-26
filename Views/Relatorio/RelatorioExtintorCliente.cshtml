@@ -1,0 +1,69 @@
+﻿@using Colex.ViewModel;
+@model ClienteViewModels;
+
+<link rel="stylesheet" href="~/css/Relatorios/RelatorioExtintiorCliente.css" />
+
+<div id="printable">
+	<table class="table">
+		<thead>
+			<tr>
+				<td class="titulo" colspan="10"><b>Relatório de extintor por cliente</b></td>
+			</tr>
+			<tr>
+				<td colspan="1" rowspan="2"><img id="logo" src="~/Img/colexLogo.jpg" /></td>
+				<td colspan="5">Endereço: @Model.EnderecoSocial @Model.Numero</td>
+				<td colspan="3">Bairro: @Model.Bairro </td>
+
+			</tr>
+			<tr>
+				<td id="clienteNome"colspan="3">Cliente: @Model.NomeFantasia </td>
+				<td colspan="1">Ord.serviço: @TempData["NumeroOs"]</td>
+				<td colspan="2">Tel: @Model.Telefone </td>
+				<td colspan="2">Cidade: @Model.Cidade</td>
+			</tr>
+			<tr>
+				<td class="titulo" colspan="10"><b>Identificação do extintior</b></td>
+			</tr>
+			<tr>
+				<td>Item</td>
+				<td>Numero cilindro</td>
+				<td>Ano fabricacao</td>
+				<td>Último ensaio</td>
+				<td>Fabricante</td>
+				<td>Tipo</td>
+				<td>Capacidade</td>
+				<td>Data recarga </td>
+				<td colspan="2">Selo</td>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				int i = 1;
+			}
+			@foreach (Colex.ViewModel.RelatorioItensViewModels extintiorItens in ViewBag.ExtintorCliente)
+			{
+				<tr>
+					<td>@i</td>
+					<td>@extintiorItens.Extintor.NumeroCilindro</td>
+					<td>@extintiorItens.Extintor.AnoFabricacao</td>
+					<td>@extintiorItens.Extintor.EnsaioHidrostatico</td>
+					<td>@extintiorItens.Extintor.MarcaExtintor.Nome</td>
+					<td>@extintiorItens.Extintor.MateriaPrima.Nome</td>
+					<td>@extintiorItens.Extintor.Capacidade.CapacidadeCarga</td>
+					<td>@extintiorItens.Os.DataAbertura.ToString("dd/MM/yyyy")</td>
+					<td>@extintiorItens.NumSelo</td>
+				</tr>
+				i++;
+			}
+		</tbody>
+	</table>
+	<div data-html2canvas-ignore="true" id="botoesRelatorio" class="d-grid gap-3 d-md-block">
+		<a id="botaoVoltar" class="btn btn-primary" href="~/Home/Index" role="button">Voltar</a>
+		<button id="btnSalvar" class="btn btn-primary">Salvar</button>
+		<button id="btnImprimir" class="btn btn-primary">Imprimir</button>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/js/Relatorio/RelatorioExtintiorCliente.js"></script>
+}

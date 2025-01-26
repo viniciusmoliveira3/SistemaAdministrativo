@@ -1,0 +1,105 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/notiflix/css/notiflix-3.2.6.min.css" />
+    <link rel="stylesheet" href="~/lib/jqueryui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="~/css/Shared.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   @* <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />*@
+    <script src="https://kit.fontawesome.com/47d6abfbea.js" crossorigin="anonymous"></script>
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav id="navBar" class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">COLEX</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="~/Home/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Os/Index">Ordem Serviço</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Cadastrar
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="~/Extintor/Index">Extintor</a></li>
+                                <li><a class="dropdown-item" href="~/Cliente/Index">Cliente</a></li>
+                                <li><a class="dropdown-item" href="~/Selo/Index">Selo</a></li>
+                                <li><a class="dropdown-item" href="~/Fornecedor/Index">Fornecedor</a></li>
+                                <li><a class="dropdown-item" href="~/Representante/Index">Representante</a></li>
+                                <li><a class="dropdown-item" href="~/Componente/Index">Componentes</a></li>
+                                <li><a class="dropdown-item" href="~/MarcaExtintor/Index">Marca de Extintor</a></li>
+                                <li><a class="dropdown-item" href="~/MateriaPrima/Index">Materia Prima</a></li>
+                                <li><a class="dropdown-item" href="~/Capacidade/Index">Capacidade</a></li>
+                                <li><a class="dropdown-item" href="~/Usuario/Index">Usuário</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Relatórios de extintores
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a id="botaoModalExtintorCliente" class="dropdown-item" href="#">Por cliente</a></li>
+                                <li><a id="botaoModalExtintorLote" class="dropdown-item" href="#">Por lote </a></li>
+                                <li><a id="botaoModalExtintiorSelo"class="dropdown-item" href="#">Por selo</a></li>
+                                <li><a id="botaoModalPorExtintor"class="dropdown-item" href="#">Por extintor</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Etiquetas
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" id="botaoModalEtiquetas" href="#">Por ord.serv</a></li>
+                                <li><a class="dropdown-item" id="botaoModalEtiquetasIndividual" href="#">Por extintor</a></li>
+                                <li><a class="dropdown-item" id="botaoModalEtiquetasTemporaria" href="#">Temporaria</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Orcamento/Index">Orçamento</a>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="~/Sair">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+  
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    
+    <script src="~/jsPDF-Master/jspdf.umd.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/notiflix/js/notiflix-3.2.6.min.js"></script>
+    <script src="~/Mask/jquery.mask.min.js"></script>
+    <script src="~/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="~/htmlCanvas/html2canvas.min.js"></script>
+    <script src="~/jsPDF-AutoTable/jspdf.plugin.autotable.min.js"></script>
+    <script src="~/js/Shared/Shared.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+</html>
+

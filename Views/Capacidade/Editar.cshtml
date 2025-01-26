@@ -1,0 +1,57 @@
+﻿@using Colex.ViewModel;
+@model CapacidadeViewModels;
+
+
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Capacidade/Capacidade.css" />
+}
+
+<div id="navegacao-div">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item"><a href="~/Capacidade/Index">Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+    </nav>
+</div>
+
+
+<h1>Editar Capacidade</h1>
+<div class="card mt-50" id="card-tabela">
+    <div id="container-tabela">
+        <form class="row" asp-controller="Capacidade" asp-action="Editar" method="post">
+            <div class="col-md-4">
+                <label asp-for="CapacidadeCarga" class="form-label">Capacidade(Kg/L)</label>
+                <input asp-for="CapacidadeCarga" type="text" class="form-control" placeholder="Digite a capacidade">
+            </div>
+            
+            <input type="hidden" asp-for="Id" />
+
+            <div class="col-12">
+                <button id="btn-editar" type="submit" class="btn btn-primary">Editar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (TempData["Success-Capacidade"] != null)
+{
+    <span id="notify" class="d-none" data-type="success">@TempData["Success-Capacidade"]</span>
+}
+
+@if (TempData["Error-Capacidade"] != null)
+{
+    <span id="notify" class="d-none" data-type="error">@TempData["Error-Capacidade"]</span>
+}
+
+@section Scripts{
+    <script src="~/js/Capacidade/Capacidade.js"></script>
+}

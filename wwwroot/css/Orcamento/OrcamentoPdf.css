@@ -1,0 +1,105 @@
+﻿.tg {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#cabecalho-pdf {
+    text-align: center !important;
+    vertical-align: central !important;
+    font-size: 15px;
+}
+
+.tg td {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 0px 5px;
+    word-break: normal;
+}
+
+.tg th {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 0px 5px;
+    word-break: normal;
+}
+
+.tg .tg-c3ow {
+    border-color: inherit;
+    text-align: center;
+    vertical-align: top
+}
+
+.tg .tg-0pky {
+    border-color: inherit;
+    text-align: left;
+    vertical-align: top
+}
+
+img {
+    width: 85px;
+}
+
+#img {
+    text-align: center !important;
+}
+
+#separacao {
+    padding: 1px !important;
+}
+
+.cabecalho {
+    text-align: center !important;
+}
+
+.container {
+    margin-right: 0px !important;
+    /*margin-left:0px !important;*/
+}
+#totalFinal{
+    text-align:right !important;
+}
+
+@media print {
+    .tg td {
+        border-color: black;
+        border-style: solid;
+        border-width: 1px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        overflow: hidden;
+        padding: 0px 5px;
+        word-break: normal;
+    }
+
+    .tg th {
+        border-color: black;
+        border-style: solid;
+        border-width: 1px;
+        font-family: Arial, sans-serif;
+        font-size: 17px;
+        font-weight: normal;
+        overflow: hidden;
+        padding: 0px 5px;
+        word-break: normal;
+    }
+
+/*    @page {
+        margin-top: 0.0in;
+        margin-left: 0.03in;
+        margin-bottom: 0.0in;
+        margin-right: 0.03in;
+    }*/
+
+    #botoesRelatorio, #navBar, #botaoVoltar, #botaoSalvar, #btnImprimir {
+        display: none;
+    }
+}

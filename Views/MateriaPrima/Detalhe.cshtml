@@ -1,0 +1,80 @@
+﻿@using Colex.ViewModel;
+@model MateriaPrimaViewModels;
+
+
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/MateriaPrima/MateriaPrima.css" />
+}
+
+<div id="navegacao-div">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item"><a href="~/MateriaPrima/Index">Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalhe</li>
+        </ol>
+    </nav>
+</div>
+<h1>Detalhe matéria prima</h1>
+<div class="card mt-50" id="card-tabela">
+    <div id="container-tabela">
+        <form class="row" asp-controller="MateriaPrima" asp-action="Detalhe" method="get">
+            <div class="col-md-3">
+                <label asp-for="Nome" class="form-label">Nome da matéria prima</label>
+                <input asp-for="Nome" type="text" class="form-control" disable>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="LoteInterno" class="form-label">Lote Interno</label>
+                <input asp-for="LoteInterno" type="text" class="form-control" disable>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Quantidade" class="form-label">Quantidade(Kg/L)</label>
+                <input asp-for="Quantidade" type="text" class="form-control" disable />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="QuantidadeAtual" class="form-label">Quantidade Atual(Kg/L)</label>
+                <input asp-for="QuantidadeAtual" type="text" class="form-control" disable />
+            </div>
+            <div class="col-md-3">
+                <label asp-for="IdFornecedor" class="form-label">Fornecedor</label>
+                <select asp-for="IdFornecedor" class="form-select" disable>
+                    <option selected>Fornecedor</option>
+                    @foreach (FornecedorViewModels fornecedor in ViewBag.Fornecedor)
+                    {
+                        <option value="@fornecedor.Id">@fornecedor.NomeFantasia</option>
+                    }
+
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Data" class="form-label">Data</label>
+                <input asp-for="Data" type="date" class="form-control" disable>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="NF" class="form-label">Nota fiscal</label>
+                <input asp-for="NF" type="text" class="form-control" disable>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Certificado" class="form-label">Certificado</label>
+                <input asp-for="Certificado" type="text" class="form-control" disable>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Batelada" class="form-label">Batelada</label>
+                <input asp-for="Batelada" type="text" class="form-control" disable >
+            </div>
+            <div id="checkboxAtivo" class="col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" asp-for="Ativo" type="checkbox" disabled>
+                    <label class="form-check-label" asp-for="Ativo">Lote ativo</label>
+                </div>
+            </div>
+        </form>
+    </div>  
+</div>

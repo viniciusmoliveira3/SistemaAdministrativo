@@ -1,0 +1,25 @@
+﻿h1 {
+    margin-top: 10px;
+    font-size: 35px;
+}
+
+#card-tabela {
+    margin-top: 18px;
+}
+
+
+#container-tabela {
+    margin: 15px;
+}
+
+button {
+    margin-top: 15px;
+}
+
+#navegacao-div {
+    display: flex;
+    float: right;
+}
+#checkboxAtivo{
+    margin-top:40px;
+}

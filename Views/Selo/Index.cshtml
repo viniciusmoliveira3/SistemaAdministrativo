@@ -1,0 +1,73 @@
+﻿@using Colex.ViewModel
+@model List<SeloViewModels>
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/Selo/Index.css" />
+    }
+
+
+<div id="navegacao-div">
+    <a id="novocliente-btn" class="btn btn-success" href="/Selo/Cadastrar" role="button">Novo selo</a>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house" data-toggle="tooltip" data-placement="top" title="Home"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Index</li>
+        </ol>
+    </nav>
+</div>
+<h1 class="m-20 fs-35">Cadastrar selo</h1>
+<div class="card" id="card-pesquisa">
+    <h2>Pesquisar selo</h2>
+
+    <div class="col-md-6">
+        <input type="text" class="form-control ml-15 mb-25 mt-15 fs-25 " placeholder="Digite o número do selo">
+    </div>
+
+
+</div>
+
+
+<button class="btn btn-primary" type="submit">Pesquisar</button>
+
+
+
+<div class="card mt-50" id="card-tabela">
+    <div class="card-block pt-2 pb-2 m-25" id="div-tabela">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nº inicial</th>
+                    <th scope="col">Nº final</th>
+                    <th scope="col">Data</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (SeloViewModels selo in Model)
+                {
+                    <tr>
+                        <td>@selo.Id</td>
+                        <td>@selo.NumeroInicial</td>
+                        <td>@selo.NumeroFinal</td>
+                        <td>@selo.Data</td>
+                        <td>
+                            <a href="/selo/detalhe?id=@selo.Id">
+                                <i class="fa-solid fa-circle-info fa-lg" data-toggle="tooltip" data-placement="top" title="Detalhe do cliente"></i>
+                            </a>
+                            <a href="/selo/editar?id=@selo.Id">
+                                <i class="fa-solid fa-gear fa-lg" data-toggle="tooltip" data-placement="top" title="Alterar cliente"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
